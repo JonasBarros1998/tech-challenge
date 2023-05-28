@@ -25,7 +25,7 @@ public class DomesticAppliances {
     private final String brand;
 
     @NotNull
-    private EnergyEfficiencyClassification energyEfficiency;
+    private final EnergyEfficiencyClassification energyEfficiency;
 
     public DomesticAppliances(
             String name,

@@ -15,7 +15,7 @@ public enum EnergyEfficiencyClassification {
     F("F"),
     G("G");
 
-    private String classification;
+    private final String classification;
 
     private EnergyEfficiencyClassification(String code) {
         this.classification=code;

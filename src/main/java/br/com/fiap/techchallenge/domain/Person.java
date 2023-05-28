@@ -1,10 +1,7 @@
 package br.com.fiap.techchallenge.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
