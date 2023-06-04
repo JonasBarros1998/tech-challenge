@@ -126,9 +126,9 @@ POST /api/eletrodomesticos
 ```
 
 
-## Desafios que foram encontrados durante o desenvolvimento e as soluções desenvolvidas
+## Desafios encontrados durante o desenvolvimento e as soluções desenvolvidas
 
-Entendimento das informações relacionadas aos eletrodomésticos que os usuários precisariam para analisar o quanto de energia cada aparelho consome.
+#### Entendimento das informações relacionadas aos eletrodomésticos que os usuários precisariam para analisar o quanto de energia cada aparelho consome.
 
 Os requisitos mínimos para completar o endpoint de eletrodomésticos do tech challange, deveria conter as seguintes informações: `nome`, `modelo` e `potencia`, porém como 
 teriamos a liberdade de adicionar outras informações a nossa classe, adicionei mais 4 campos que na minha opnião são relevantes para um melhor entendimento
@@ -151,9 +151,8 @@ Para fazer a modelagem da classe, precisei adicionar o tipo `Enum` para o campo 
 alterações com o passar do tempo, e também vai trazer clareza aos desenvolvedores que tiverem alterando o modelo de `Eletrodomesticos`
 
 
+#### Capturar execptions com o `RestControllerAdvice` do spring
 
-
-
-
-
+Para capturar as exception e retornar o status code correto caso o consumidor da api enviasse um campo faltante ou com um tipo incorreto, optei por criar duas classes `ErroForm` e `ValidacaoHandler`. 
+Dentro da classe `ValidacaoHandler` adicionei métodos com as Exceptions que gostaria de capturar e personalizando as mensagens para que o consumidor consiga entender o motivo que ocasionou aquele erro.
 
