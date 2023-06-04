@@ -27,7 +27,7 @@ POST /api/enderecos
 | numero | `número da residência` |
 | bairro | `nome do bairro` |
 | rua | `nome da rua` |
-| cep | `00000-000` |
+| cep | `formato permitido: 00000-000` |
 
 ### response
 
@@ -153,6 +153,10 @@ alterações com o passar do tempo, e também vai trazer clareza aos desenvolved
 
 #### Capturar execptions com o `RestControllerAdvice` do spring
 
-Para capturar as exception e retornar o status code correto caso o consumidor da api enviasse um campo faltante ou com um tipo incorreto, optei por criar duas classes `ErroForm` e `ValidacaoHandler`. 
-Dentro da classe `ValidacaoHandler` adicionei métodos com as Exceptions que gostaria de capturar e personalizando as mensagens para que o consumidor consiga entender o motivo que ocasionou aquele erro.
+Para capturar as exceptions e retornar o status code e a mensagem correta caso o consumidor da api enviasse um campo faltante ou com um tipo incorreto, eu poderia fazer essa verificação no própio controller mas optei por criar duas classes `ErroForm` e `ValidacaoHandler` para capturar cada exception e retornar a mensagem e o status code corretos ao consumidor. 
+Dentro da classe `ValidacaoHandler` adicionei os métodos com as Exceptions que gostaria de capturar e as mensagens personalizadas, para que o consumidor consiga entender o motivo que ocasionou aquele erro.
+
+
+#### Validação de CPF
+Para validar o CPF optei por utilizar as anotações do hibernate ao invés de criar uma classe personalizada com os algoritmos necessários para validação do CPF. 
 
