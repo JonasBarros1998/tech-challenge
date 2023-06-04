@@ -1,11 +1,11 @@
 package br.com.fiap.techchallenge.utils;
 
-public class ErrorForm {
+public class ErroForm {
   
   private final String field;
   private final String error;
 
-  public ErrorForm(String field, String error) {
+  public ErroForm(String field, String error) {
     this.field = field;
     this.error = error;
   }

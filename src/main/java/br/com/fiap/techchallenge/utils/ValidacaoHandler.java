@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestControllerAdvice
-public class ValidationHandler {
+public class ValidacaoHandler {
 
     private final MessageSource messageSource;
 
@@ -25,46 +25,46 @@ public class ValidationHandler {
     private String dateFormat;
 
     @Autowired
-    ValidationHandler(MessageSource messageSource) {
+    ValidacaoHandler(MessageSource messageSource) {
         this.messageSource = messageSource;
     }
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<ErrorForm> handler(MethodArgumentNotValidException exception) {
-        List<ErrorForm> errorFormList = new ArrayList<>();
+    public List<ErroForm> handler(MethodArgumentNotValidException exception) {
+        List<ErroForm> erroFormList = new ArrayList<>();
 
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
         fieldErrors.forEach(e -> {
             String message = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            ErrorForm errorForm = new ErrorForm(e.getField(), message);
-            errorFormList.add(errorForm);
+            ErroForm erroForm = new ErroForm(e.getField(), message);
+            erroFormList.add(erroForm);
         });
 
-        return errorFormList;
+        return erroFormList;
     }
 
 
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(DateTimeParseException.class)
-    public List<ErrorForm> handler(DateTimeParseException exception) {
-        List<ErrorForm> errorFormList = new ArrayList<>();
-        ErrorForm errorForm = new ErrorForm("date",  String.format("invalid Date: %s", this.dateFormat));
-        errorFormList.add(errorForm);
+    public List<ErroForm> handler(DateTimeParseException exception) {
+        List<ErroForm> erroFormList = new ArrayList<>();
+        ErroForm erroForm = new ErroForm("date",  String.format("data invalida %s", this.dateFormat));
+        erroFormList.add(erroForm);
 
-        return errorFormList;
+        return erroFormList;
     }
 
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoSuchElementException.class)
-    public List<ErrorForm> handler(NoSuchElementException exception) {
-        List<ErrorForm> errorFormList = new ArrayList<>();
-        ErrorForm errorForm = new ErrorForm("energyEfficiency", exception.getMessage());
-        errorFormList.add(errorForm);
+    public List<ErroForm> handler(NoSuchElementException exception) {
+        List<ErroForm> erroFormList = new ArrayList<>();
+        ErroForm erroForm = new ErroForm("eficienciaEnergetica.classificacao", exception.getMessage());
+        erroFormList.add(erroForm);
 
-        return errorFormList;
+        return erroFormList;
     }
 
 }
