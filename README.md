@@ -1,6 +1,8 @@
 # Tech challenge
 
-## Endereços
+## Documentação das APIs
+
+### Endereços
 O endpoint tem como objetivo gerenciar o endereços cadastrados em nosso sistema. 
 
 ```http
@@ -42,7 +44,7 @@ POST /api/enderecos
 | rua | `nome da rua` |
 | cep | `formato permitido: 00000-000` |
 
-## Gestão de pessoas
+### Gestão de pessoas
 O endpoint tem como objetivo fazer o cadastro e gerenciar os usuários que acessam o nosso sistema
 
 ```http
@@ -76,7 +78,7 @@ POST /api/pessoas
 | genero | `genero` |
 | cpf | `formato permitido: 000.000.000-00` |
 
-## Eletrodomésticos
+### Eletrodomésticos
 O endpoint tem como objetivo cadastrar e gerenciar informações dos eletrodomésticos que os usuários cadastram em nosso sistema
 
 ```http
@@ -126,7 +128,7 @@ POST /api/eletrodomesticos
 | dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` | 
 
 
-## Desafios encontrados durante o desenvolvimento e as soluções desenvolvidas
+### Desafios encontrados durante o desenvolvimento e as soluções desenvolvidas
 
 #### Entendimento das informações relacionadas aos eletrodomésticos que os usuários precisariam para analisar o quanto de energia cada aparelho consome.
 
