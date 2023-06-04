@@ -128,6 +128,22 @@ POST /api/eletrodomesticos
 | dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` | 
 
 
+### Ferramentas e tecnologias utilizadas
+Java versão 17: Por ser LTS (Long Term Support) consigo utilizar os recursos mais recentes do spring framework. Com a versão 17 também posso utilizar 
+alguns recursos interessantes que podem ser util na continuidade do curso, como por exemplo Sealed Classes.
+
+Spring versão 3.1.0: Versão mais recente do spring que tiveram algumas atualizações interessantes, como por exempo auto-configuration do Spring Autorization Server, 
+e também já é possível a utlização do spring data 2023.0
+
+Maven versão 3.8.6: Como gerenciados de dependências
+
+spring-boot-starter-validation: Para fazer todas as validações necessárias na entrada das requisições dos endpoints.
+
+spring-boot-starter-web: Essa dependências nos trazem inúmeras facilidades, como por exemplo trabalhar com aplicações RestFull.
+
+spring-boot-devtools: Atualizações liveReload durante o desenvolvimento do projeto
+
+
 ### Desafios encontrados durante o desenvolvimento e as soluções desenvolvidas
 
 #### Entendimento das informações relacionadas aos eletrodomésticos que os usuários precisariam para analisar o quanto de energia cada aparelho consome.
