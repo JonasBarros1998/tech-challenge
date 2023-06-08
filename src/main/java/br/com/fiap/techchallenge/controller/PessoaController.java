@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.controller;
 
-import br.com.fiap.techchallenge.domain.Pessoa;
+import br.com.fiap.techchallenge.domain.PessoaFisica;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,18 +11,17 @@ import org.springframework.web.bind.annotation.*;
 public class PessoaController {
 
     @PostMapping
-    public ResponseEntity<Pessoa> person(@RequestBody @Valid Pessoa pessoaRequest) {
-        Pessoa person = new Pessoa(
-          pessoaRequest.getNome(),
-          pessoaRequest.getDataDeNascimento(),
-          pessoaRequest.getGenero(),
-          pessoaRequest.getCpf()
+    public ResponseEntity<PessoaFisica> pessoa(@RequestBody @Valid PessoaFisica pessoaRequest) {
 
+        var pessoa = new PessoaFisica(
+          pessoaRequest.getNome(),
+          pessoaRequest.getNascimento(),
+          pessoaRequest.getGenero(),
+          pessoaRequest.getCpf(),
+          pessoaRequest.getDependentes()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(person);
+        return ResponseEntity.status(HttpStatus.CREATED).body(pessoa);
     }
-
-
 
 }

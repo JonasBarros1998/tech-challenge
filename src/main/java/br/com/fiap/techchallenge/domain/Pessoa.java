@@ -1,30 +1,34 @@
 package br.com.fiap.techchallenge.domain;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 
-public class Pessoa {
+public abstract class Pessoa {
 
     @NotEmpty
     @CPF
-    private final String cpf;
+    private String cpf;
 
     @NotEmpty
-    private final String nome;
+    private String nome;
 
     @Past
-    @NotEmpty
-    private final LocalDate dataDeNascimento;
+    @NotNull
+    //@NotEmpty
+    private LocalDate nascimento;
 
     @NotEmpty
-    private final String genero;
+    private String genero;
 
-    public Pessoa(String name, LocalDate dataDeNascimento, String genero, String cpf) {
+    Pessoa() {}
+
+    public Pessoa(String name, LocalDate nascimento, String genero, String cpf) {
         this.nome = name;
-        this.dataDeNascimento = dataDeNascimento;
+        this.nascimento = nascimento;
         this.genero = genero;
         this.cpf = cpf;
     }
@@ -33,8 +37,8 @@ public class Pessoa {
         return nome;
     }
 
-    public LocalDate getDataDeNascimento() {
-        return dataDeNascimento;
+    public LocalDate getNascimento() {
+        return nascimento;
     }
 
     public String getGenero() {
@@ -44,5 +48,7 @@ public class Pessoa {
     public String getCpf() {
         return cpf;
     }
+
+
 
 }
