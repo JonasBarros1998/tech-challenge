@@ -18,7 +18,6 @@ public abstract class Pessoa {
 
     @Past
     @NotNull
-    //@NotEmpty
     private LocalDate nascimento;
 
     @NotEmpty
