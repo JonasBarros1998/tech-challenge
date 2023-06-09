@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.controller;
 
-import br.com.fiap.techchallenge.domain.PessoaFisica;
+import br.com.fiap.techchallenge.domain.Cliente;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/pessoas")
-public class PessoaController {
+public class ClienteController {
 
     @PostMapping
-    public ResponseEntity<PessoaFisica> pessoa(@RequestBody @Valid PessoaFisica pessoaRequest) {
+    public ResponseEntity<Cliente> pessoa(@RequestBody @Valid Cliente pessoaRequest) {
 
-        var pessoa = new PessoaFisica(
+        var cliente = new Cliente(
           pessoaRequest.getNome(),
           pessoaRequest.getNascimento(),
           pessoaRequest.getGenero(),
@@ -21,7 +21,7 @@ public class PessoaController {
           pessoaRequest.getDependentes()
         );
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoa);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cliente);
     }
 
 }

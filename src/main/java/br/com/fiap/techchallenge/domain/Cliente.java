@@ -6,16 +6,16 @@ import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class PessoaFisica extends Pessoa {
+public class Cliente extends Pessoa {
 
 
 	@Valid
 	@Nullable
 	private ArrayList<Dependentes> dependentes;
 
-	PessoaFisica() {}
+	Cliente() {}
 
-	public PessoaFisica(String name, LocalDate nascimento, String genero, String cpf, ArrayList<Dependentes> dependentes) {
+	public Cliente(String name, LocalDate nascimento, String genero, String cpf, ArrayList<Dependentes> dependentes) {
 		super(name, nascimento, genero, cpf);
 		this.dependentes = dependentes;
 	}
