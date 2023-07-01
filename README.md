@@ -103,12 +103,12 @@ POST /api/pessoas
 	"nascimento": "string (ano-mes-dia)",
 	"genero": "string",
 	"dependentes": [
-		{
+			{
 			"cpf": "string (000.000.000-00 ou 00000000000)",
 			"nome": "string",
 			"nascimento": "string (ano-mes-dia)",
 			"genero": "string"
-		}
+			}
 	],
 	"dataDeCadastro": "ano-mes-dia"
 }
