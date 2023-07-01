@@ -1,9 +1,7 @@
 package br.com.fiap.techchallenge.domain;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,10 +14,12 @@ public class Eletrodomestico {
     @NotEmpty
     private final String modelo;
 
-    @DecimalMin(value = "0")
+    @NotNull
+    @PositiveOrZero(message = "deve ser maior que 0")
     private final BigDecimal potencia;
 
-    @DecimalMin(value = "0")
+    @NotNull
+    @PositiveOrZero(message = "deve ser maior que 0")
     private final BigDecimal volts;
 
     @NotEmpty
@@ -31,12 +31,12 @@ public class Eletrodomestico {
     private final LocalDate dataDeCadastro = LocalDate.now();
 
     public Eletrodomestico(
-            String nome,
-            String modelo,
-            BigDecimal potencia,
-            BigDecimal volts,
-            String marca,
-            EficienciaEnergetica eficienciaEnergetica
+      String nome,
+      String modelo,
+      BigDecimal potencia,
+      BigDecimal volts,
+      String marca,
+      EficienciaEnergetica eficienciaEnergetica
     ) {
         this.nome = nome;
         this.modelo = modelo;

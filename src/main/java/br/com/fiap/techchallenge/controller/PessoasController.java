@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/pessoas")
-public class ClienteController {
+public class PessoasController {
 
     @PostMapping
-    public ResponseEntity<Cliente> pessoa(@RequestBody @Valid Cliente pessoaRequest) {
+    public ResponseEntity<Cliente> pessoa(@RequestBody @Valid Cliente pessoasRequest) {
 
         var cliente = new Cliente(
-          pessoaRequest.getNome(),
-          pessoaRequest.getNascimento(),
-          pessoaRequest.getGenero(),
-          pessoaRequest.getCpf(),
-          pessoaRequest.getDependentes()
+          pessoasRequest.getNome(),
+          pessoasRequest.getNascimento(),
+          pessoasRequest.getGenero(),
+          pessoasRequest.getCpf(),
+          pessoasRequest.getDependentes()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(cliente);

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Pattern;
 public class Endereco {
 
   @NotEmpty
-  @Pattern(regexp = "\\d{5}-\\d{3}", message = "the format cep should be 00000-000")
+  @Pattern(regexp = "\\d{5}-\\d{3}", message = "Deve estar no formato 00000-000")
   private final String cep;
 
   @NotEmpty

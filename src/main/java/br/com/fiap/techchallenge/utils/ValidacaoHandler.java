@@ -50,7 +50,7 @@ public class ValidacaoHandler {
     @ExceptionHandler(DateTimeParseException.class)
     public List<ErroForm> handler(DateTimeParseException exception) {
         List<ErroForm> erroFormList = new ArrayList<>();
-        ErroForm erroForm = new ErroForm("date",  String.format("data invalida %s", this.dateFormat));
+        ErroForm erroForm = new ErroForm("data",  String.format("o formato deve estar no padrao ISO 8601 %s", this.dateFormat));
         erroFormList.add(erroForm);
 
         return erroFormList;
@@ -61,7 +61,9 @@ public class ValidacaoHandler {
     @ExceptionHandler(NoSuchElementException.class)
     public List<ErroForm> handler(NoSuchElementException exception) {
         List<ErroForm> erroFormList = new ArrayList<>();
-        ErroForm erroForm = new ErroForm("eficienciaEnergetica.classificacao", exception.getMessage());
+        ErroForm erroForm = new ErroForm(
+          "eficienciaEnergetica.classificacao",
+          "A classificação deve conter os seguintes valores: A, B, C, D, E, F ou G");
         erroFormList.add(erroForm);
 
         return erroFormList;
