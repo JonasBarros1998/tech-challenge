@@ -68,12 +68,12 @@ POST /api/pessoas
 ### response
 ```json
 {
-	"cpf": "string",
-	"nome": "string",
-	"nascimento": "string",
-	"genero": "string",
-	"dependentes": null,
-	"dataDeCadastro": "string"
+  "cpf": "string",
+  "nome": "string",
+  "nascimento": "string",
+  "genero": "string",
+  "dependentes": null,
+  "dataDeCadastro": "string"
 }
 ```
 
@@ -98,19 +98,17 @@ POST /api/pessoas
 ### response
 ```json
 {
-	"cpf": "string (000.000.000-00 ou 00000000000)",
-	"nome": "string",
-	"nascimento": "string (ano-mes-dia)",
-	"genero": "string",
-	"dependentes": [
-			{
-			"cpf": "string (000.000.000-00 ou 00000000000)",
-			"nome": "string",
-			"nascimento": "string (ano-mes-dia)",
-			"genero": "string"
-			}
-	],
-	"dataDeCadastro": "ano-mes-dia"
+  "cpf": "string (000.000.000-00 ou 00000000000)",
+  "nome": "string",
+  "nascimento": "string (ano-mes-dia)",
+  "genero": "string",
+  "dependentes": [{
+    "cpf": "string (000.000.000-00 ou 00000000000)",
+    "nome": "string",
+    "nascimento": "string (ano-mes-dia)",
+    "genero": "string"
+  }],
+  "dataDeCadastro": "ano-mes-dia"
 }
 ```
 
@@ -141,7 +139,8 @@ POST /api/eletrodomesticos
   "marca": "string",
   "eficienciaEnergetica": {
     "classificacao": "string",
-    "consumoEnergetico": "number"
+    "consumoEnergetico": "number",
+    "porcentagemDeEconomia": "string"
   }
 }
 ```
@@ -149,16 +148,17 @@ POST /api/eletrodomesticos
 ### response
 ```json
 {
-	"nome": "string",
-	"modelo": "string",
-	"potencia": "number",
-	"volts": "number",
-	"marca": "string",
-	"eficienciaEnergetica": {
-		"consumoEnergetico": "number",
-		"classificacao": "string"
-	},
-	"dataDeCadastro": "string"
+  "nome": "string",
+  "modelo": "string",
+  "potencia": "number",
+  "volts": "number",
+  "marca": "string",
+  "eficienciaEnergetica": {
+    "consumoEnergetico": "number",
+    "classificacao": "string",
+    "porcentagemDeEconomia": "string"
+  },
+  "dataDeCadastro": "string"
 }
 ```
 
