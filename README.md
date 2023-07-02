@@ -173,7 +173,7 @@ POST /api/eletrodomesticos
 | marca | `marca` |
 | classificacao | `A letra que está relacionada ao aparelho na tabela de de eficiência energetica do Inmetro, só será permitido uma das seguintes classificações: A, B, C, D, E, F ou G` |
 | consumoEnergetico | `consumo energético (KWh/mês) que está inserido na tabela de eficiência energetica do Inmetro` |
-| porcentagemDeEconomia | `Porcentagem de economia do aparelho, por exemplo 10, 20, 30. Esse campo é utilizado para os modelos fabricados antes de 2021`
+| porcentagemDeEconomia | `Campo opcional. Porcentagem de economia do aparelho, por exemplo 10, 20, 30. Esse campo é utilizado para os modelos fabricados antes de 2021`
 | dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` | 
 
 ## Exemplo de requisições das APIs
