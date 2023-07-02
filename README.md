@@ -2,6 +2,9 @@
 
 ## Documentação das APIs
 
+### Servidor local
+`http://localhost:8080`
+
 ### Endereços
 O endpoint tem como objetivo cadastrar novos endereços em nosso sistema. 
 
@@ -224,4 +227,8 @@ Dentro da classe `ValidacaoHandler` adicionei os métodos com as Exceptions que 
 
 #### Validação de CPF
 Para validar o CPF optei por utilizar as anotações do hibernate ao invés de criar uma classe personalizada com as regras necessárias para validação do CPF.
+
+## Exemplo de requisições das APIs
+
+[documentação](https://documenter.getpostman.com/view/23405037/2s93zCXztZ)
 
