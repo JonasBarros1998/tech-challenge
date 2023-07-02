@@ -55,8 +55,7 @@ O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
 POST /api/pessoas
 ```
 
-### Segue abaixo o body que deve ser enviado se a pessoa não tiver dependentes, e o response com dependentes retornando `null`
-
+Segue abaixo o body que deve ser enviado se a pessoa não tiver dependentes, e o response com dependentes retornando `null`
 ### body
 ```json
 {
@@ -80,8 +79,7 @@ POST /api/pessoas
 }
 ```
 
-### Segue abaixo o body que deve ser enviado com todos os dependentes da pessoa, e o response vai retornar todos os dados dos dependentes
-
+Segue abaixo o body que deve ser enviado com todos os dependentes da pessoa, e o response retornando todos os dados dos dependentes
 ### body
 ```json
 {
