@@ -1,20 +1,35 @@
-package br.com.fiap.techchallenge.Aplicacao.Entidades;
+package br.com.fiap.techchallenge.domain.Entidades;
 
-import br.com.fiap.techchallenge.Aplicacao.Entidades.ValueObjects.*;
+import br.com.fiap.techchallenge.domain.Entidades.ValueObjects.*;
+import jakarta.persistence.*;
 
+import java.util.UUID;
+
+@Entity
+@Table()
 public class Endereco {
 
-  private final CEP cep;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-  private final Estado estado;
+  @Embedded
+  private CEP cep;
 
-  private final Rua rua;
+  @Embedded
+  private Estado estado;
 
-  private final Numero numero;
+  @Embedded
+  private Rua rua;
 
-  private final Bairro bairro;
+  @Embedded
+  private Numero numero;
 
-  private final Cidade cidade;
+  @Embedded
+  private Bairro bairro;
+
+  @Embedded
+  private Cidade cidade;
   
   public Endereco(Rua rua, Numero numero, Bairro bairro, Cidade cidade, Estado estado, CEP cep) {
     this.rua = rua;
@@ -24,6 +39,8 @@ public class Endereco {
     this.estado = estado;
     this.cep = cep;
   }
+
+  public Endereco() {}
 
   public Rua getRua() {
     return rua;
