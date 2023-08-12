@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.controller;
+package br.com.fiap.techchallenge.view.controller;
 
 import br.com.fiap.techchallenge.domain.Cliente;
 import jakarta.validation.Valid;

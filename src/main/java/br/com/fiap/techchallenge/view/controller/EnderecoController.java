@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.controller;
+package br.com.fiap.techchallenge.view.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.techchallenge.domain.Endereco;
+import br.com.fiap.techchallenge.Aplicacao.Entidades.Endereco;
 import jakarta.validation.Valid;
 
 @RestController
