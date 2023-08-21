@@ -1,13 +1,20 @@
-package br.com.fiap.techchallenge.domain;
+package br.com.fiap.techchallenge.domain.Entidades;
 
+import br.com.fiap.techchallenge.domain.Dependentes;
+import br.com.fiap.techchallenge.domain.Pessoa;
 import jakarta.annotation.Nullable;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
+import jdk.jfr.Enabled;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Cliente extends Pessoa {
+
 
 	@Valid
 	@Nullable
@@ -15,7 +22,7 @@ public class Cliente extends Pessoa {
 
 	private final LocalDate dataDeCadastro = LocalDate.now();
 
-	Cliente() {}
+	public Cliente() {}
 
 	public Cliente(String name, LocalDate nascimento, String genero, String cpf, ArrayList<Dependentes> dependentes) {
 		super(name, nascimento, genero, cpf);

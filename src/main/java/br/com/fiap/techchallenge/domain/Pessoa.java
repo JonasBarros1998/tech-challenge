@@ -23,7 +23,7 @@ public abstract class Pessoa {
     @NotEmpty
     private String genero;
 
-    Pessoa() {}
+    public Pessoa() {}
 
     public Pessoa(String name, LocalDate nascimento, String genero, String cpf) {
         this.nome = name;

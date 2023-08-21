@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.View.Controller;
 
-import br.com.fiap.techchallenge.domain.Cliente;
+import br.com.fiap.techchallenge.domain.Entidades.Cliente;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
