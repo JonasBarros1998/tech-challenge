@@ -1,6 +1,5 @@
 package br.com.fiap.techchallenge.domain.Entidades;
 
-import br.com.fiap.techchallenge.View.Controller.DTO.EnderecoDTO;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

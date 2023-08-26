@@ -1,39 +1,34 @@
 package br.com.fiap.techchallenge.domain.Entidades;
 
-import br.com.fiap.techchallenge.domain.Dependentes;
-import br.com.fiap.techchallenge.domain.Pessoa;
-import jakarta.annotation.Nullable;
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jdk.jfr.Enabled;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
+@Entity
+@Table(name = "pessoas")
 public class Cliente extends Pessoa {
-
-
+	/*
 	@Valid
 	@Nullable
-	private ArrayList<Dependentes> dependentes;
+	private ArrayList<Dependentes> dependentes;*/
 
+	@Column(insertable = true)
 	private final LocalDate dataDeCadastro = LocalDate.now();
 
 	public Cliente() {}
 
-	public Cliente(String name, LocalDate nascimento, String genero, String cpf, ArrayList<Dependentes> dependentes) {
+	public Cliente(String name, LocalDate nascimento, String genero, String cpf/*ArrayList<Dependentes> dependentes*/) {
 		super(name, nascimento, genero, cpf);
-		this.dependentes = dependentes;
+		//this.dependentes = dependentes;
 	}
 
-	public ArrayList<Dependentes> getDependentes() {
+	/*public ArrayList<Dependentes> getDependentes() {
 		return dependentes;
 	}
 
 	public LocalDate getDataDeCadastro() {
 		return dataDeCadastro;
-	}
+	}*/
 }

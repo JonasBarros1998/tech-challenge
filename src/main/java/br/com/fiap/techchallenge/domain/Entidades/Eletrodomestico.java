@@ -1,34 +1,41 @@
-package br.com.fiap.techchallenge.domain;
+package br.com.fiap.techchallenge.domain.Entidades;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
+@Entity
+@Table(name = "eletrodomesticos")
 public class Eletrodomestico {
 
-    @NotEmpty
-    private final String nome;
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @NotEmpty
-    private final String modelo;
+    @Column(nullable = false, length = 100)
+    private String nome;
 
-    @NotNull
-    @PositiveOrZero(message = "deve ser maior que 0")
-    private final BigDecimal potencia;
+    @Column(nullable = false, length = 100)
+    private String modelo;
 
-    @NotNull
-    @PositiveOrZero(message = "deve ser maior que 0")
-    private final BigDecimal volts;
+    @Column(nullable = false)
+    private BigDecimal potencia;
 
-    @NotEmpty
-    private final String marca;
+    @Column(nullable = false)
+    private BigDecimal volts;
 
-    @Valid
-    private final EficienciaEnergetica eficienciaEnergetica;
+    @Column(nullable = false, length = 50)
+    private String marca;
 
+    @Embedded
+    private EficienciaEnergetica eficienciaEnergetica;
+
+    @Column(nullable = false, insertable = true)
     private final LocalDate dataDeCadastro = LocalDate.now();
+
+    public Eletrodomestico() {}
 
     public Eletrodomestico(
       String nome,

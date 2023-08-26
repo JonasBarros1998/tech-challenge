@@ -1,26 +1,23 @@
-package br.com.fiap.techchallenge.domain;
+package br.com.fiap.techchallenge.domain.Entidades;
 
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import org.hibernate.validator.constraints.br.CPF;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Pessoa {
 
-    @NotEmpty
-    @CPF
+    @Id
     private String cpf;
 
-    @NotEmpty
+    @Column(length = 255, nullable = false)
     private String nome;
 
-    @Past
-    @NotNull
+    @Column(nullable = false)
     private LocalDate nascimento;
 
-    @NotEmpty
+    @Column(length = 50, nullable = false)
     private String genero;
 
     public Pessoa() {}
@@ -48,6 +45,19 @@ public abstract class Pessoa {
         return cpf;
     }
 
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
 
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
 }

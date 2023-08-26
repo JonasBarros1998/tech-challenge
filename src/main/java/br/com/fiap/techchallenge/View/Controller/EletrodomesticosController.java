@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.View.Controller;
 
-import br.com.fiap.techchallenge.domain.Eletrodomestico;
+import br.com.fiap.techchallenge.domain.Entidades.Eletrodomestico;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
