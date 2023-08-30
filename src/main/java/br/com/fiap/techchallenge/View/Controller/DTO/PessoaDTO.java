@@ -1,7 +1,6 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
 import br.com.fiap.techchallenge.domain.Entidades.Cliente;
-import br.com.fiap.techchallenge.domain.Entidades.Pessoa;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -10,51 +9,84 @@ import org.hibernate.validator.constraints.br.CPF;
 import java.time.LocalDate;
 import java.util.List;
 
-public record PessoaDTO(
+public class PessoaDTO {
 	@NotEmpty
 	@CPF
-	String cpf,
+	private String cpf;
 
 	@NotEmpty
-	String nome,
+	private String nome;
 
 	@Past
 	@NotNull
-	LocalDate nascimento,
+	private LocalDate nascimento;
 
 	@NotEmpty
-	String genero
-) {
+	private String genero;
 
-	public PessoaDTO(Pessoa pessoa) {
-		this(
-			pessoa.getCpf(),
-			pessoa.getNome(),
-			pessoa.getNascimento(),
-			pessoa.getGenero()
-		);
+	private List<DependenteDTO> dependentes;
+
+	public PessoaDTO(Cliente cliente) {
+		this.cpf = cliente.getCpf();
+		this.nome = cliente.getNome();
+		this.nascimento = cliente.getNascimento();
+		this.genero = cliente.getGenero();
 	}
+	
+	public PessoaDTO(Cliente cliente, List<DependenteDTO> dependentes) {
+		this.cpf = cliente.getCpf();
+		this.nome = cliente.getNome();
+		this.nascimento = cliente.getNascimento();
+		this.genero = cliente.getGenero();
+		this.dependentes = dependentes;
+	}
+
+	public PessoaDTO() {}
 
 	public static List<PessoaDTO> converterDeClienteParaPessoaDTO(List<Cliente> clientes) {
 		return clientes.stream().map(PessoaDTO::new).toList();
 	}
 
+
 	public static PessoaDTO converterDeClienteParaPessoaDTO(Cliente cliente) {
-		return new PessoaDTO(
-			cliente.getCpf(),
-			cliente.getNome(),
-			cliente.getNascimento(),
-			cliente.getGenero()
-		);
+		return new PessoaDTO(cliente);
 	}
 
 	public static Cliente converterDePessoaDTOParaCliente(PessoaDTO pessoaDTO) {
 		return new Cliente(
-			pessoaDTO.nome(),
-			pessoaDTO.nascimento(),
-			pessoaDTO.genero(),
-			pessoaDTO.cpf()
+			pessoaDTO.nome,
+			pessoaDTO.nascimento,
+			pessoaDTO.genero,
+			pessoaDTO.cpf
 		);
 	}
 
+	public static Cliente converterDeDependenteDTOParaCliente(DependenteDTO dependenteDTO) {
+		return new Cliente(
+			dependenteDTO.nome(),
+			dependenteDTO.nascimento(),
+			dependenteDTO.genero(),
+			dependenteDTO.cpf()
+		);
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public LocalDate getNascimento() {
+		return nascimento;
+	}
+
+	public String getGenero() {
+		return genero;
+	}
+
+	public List<DependenteDTO> getDependentes() {
+		return dependentes;
+	}
 }

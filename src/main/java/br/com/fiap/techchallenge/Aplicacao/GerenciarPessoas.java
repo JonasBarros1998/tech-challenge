@@ -1,26 +1,45 @@
 package br.com.fiap.techchallenge.Aplicacao;
 
-import br.com.fiap.techchallenge.Infra.Repository.PessoasRepository;
+import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
+import br.com.fiap.techchallenge.Infra.Repository.PessoaRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
 import br.com.fiap.techchallenge.domain.Entidades.Cliente;
+import br.com.fiap.techchallenge.domain.Entidades.Dependente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class GerenciarPessoas {
 
-	PessoasRepository pessoaRepository;
+	PessoaRepository pessoaRepository;
+	DependenteRepository dependenteRepository;
 
 	@Autowired
-	GerenciarPessoas(PessoasRepository pessoaRepository) {
+	GerenciarPessoas(PessoaRepository pessoaRepository, DependenteRepository dependenteRepository) {
 		this.pessoaRepository = pessoaRepository;
+		this.dependenteRepository = dependenteRepository;
 	}
 
 	public PessoaDTO salvar(PessoaDTO pessoaDTO) {
-		var cliente = pessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
-		this.pessoaRepository.save(cliente);
+
+		List<Cliente> pessoas = new ArrayList<>();
+		List<Dependente> dependentes = new ArrayList<>();
+
+		var pessoa = PessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
+		pessoas.add(pessoa);
+
+		pessoaDTO.getDependentes().stream()
+			.forEach((item) -> {
+				var dependente = PessoaDTO.converterDeDependenteDTOParaCliente(item);
+				pessoas.add(dependente);
+				dependentes.add(new Dependente(item.grauDeRelacionamento(), pessoa, dependente));
+			});
+
+		this.pessoaRepository.saveAll(pessoas);
+		this.dependenteRepository.saveAll(dependentes);
 		return pessoaDTO;
 	}
 
@@ -32,10 +51,10 @@ public class GerenciarPessoas {
 	public PessoaDTO editar(PessoaDTO pessoaDTO, String idPessoa) {
 		Cliente cliente = this.pessoaRepository.findById(idPessoa).orElse(null);
 
-		cliente.setCpf(pessoaDTO.cpf());
-		cliente.setNascimento(pessoaDTO.nascimento());
-		cliente.setNome(pessoaDTO.nome());
-		cliente.setGenero(pessoaDTO.genero());
+		cliente.setCpf(pessoaDTO.getCpf());
+		cliente.setNascimento(pessoaDTO.getNascimento());
+		cliente.setNome(pessoaDTO.getNome());
+		cliente.setGenero(pessoaDTO.getGenero());
 
 		this.pessoaRepository.save(cliente);
 

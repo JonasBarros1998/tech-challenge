@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.domain.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
@@ -7,7 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Entity
-@Table()
+@Table(name = "enderecos")
 public class Endereco {
 
   @Id
@@ -38,14 +39,19 @@ public class Endereco {
   @NotEmpty
   @Column(length = 50, nullable = false)
   private String cidade;
+
+  @JsonBackReference()
+  @ManyToOne()
+  private Cliente cliente;
   
-  public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep) {
+  public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep, Cliente cliente) {
     this.rua = rua;
     this.numero = numero;
     this.bairro = bairro;
     this.cidade = cidade;
     this.estado = estado;
     this.cep = cep;
+    this.cliente = cliente;
   }
 
   public Endereco() {}
@@ -100,5 +106,9 @@ public class Endereco {
 
   public void setCidade(String cidade) {
     this.cidade = cidade;
+  }
+
+  public Cliente getCliente() {
+    return cliente;
   }
 }

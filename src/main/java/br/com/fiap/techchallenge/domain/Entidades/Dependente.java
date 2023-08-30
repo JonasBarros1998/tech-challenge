@@ -1,20 +1,37 @@
 package br.com.fiap.techchallenge.domain.Entidades;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import java.time.LocalDate;
+import jakarta.persistence.*;
+
+import java.util.UUID;
 
 @Entity
-@Table(name = "dependentes")
-public class Dependente extends Pessoa {
+@Table(name = "relacionamento")
+public class Dependente {
 
-	@Column(nullable = false, length = 20)
-	String tipo_dependencia;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	UUID id;
 
-	public Dependente(String name, LocalDate nascimento, String genero, String cpf) {
-		super(name, nascimento, genero, cpf);
-	}
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id_1")
+	Cliente pessoaId1;
+
+	@ManyToOne
+	@JoinColumn(name = "pessoa_id_2")
+	Cliente pessoaId2;
+
+	@Column(nullable = false, length = 50, name = "parentesco")
+	String parentesco;
 
 	public Dependente() {}
+
+	public Dependente(String parentesco, Cliente pessoaId1, Cliente pessoaId2) {
+		this.parentesco = parentesco;
+		this.pessoaId2 = pessoaId2;
+		this.pessoaId1 = pessoaId1;
+	}
+
+	public String getParentesco() {
+		return parentesco;
+	}
 }

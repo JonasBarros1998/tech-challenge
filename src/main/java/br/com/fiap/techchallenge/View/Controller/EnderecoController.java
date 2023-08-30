@@ -30,31 +30,31 @@ public class EnderecoController {
   }
 
   @GetMapping
-  public ResponseEntity<List<EnderecoDTO>> endereco() {
+  public ResponseEntity<List<EnderecoDTO>> listar() {
     return ResponseEntity.status(HttpStatus.CREATED).body(gerenciarEnderecos.listar());
   }
 
   @GetMapping(params = "bairro")
   public ResponseEntity<List<EnderecoDTO>> pesquisarPorBairro(@RequestParam(name = "bairro") String bairro) {
-    var enderecosDTO = this.gerenciarEnderecos.pesquisarPor(bairro, "bairro");
+    var enderecosDTO = this.gerenciarEnderecos.pesquisarPorBairro(bairro);
     return ResponseEntity.status(HttpStatus.OK).body(enderecosDTO);
   }
 
   @GetMapping(params = "cidade")
   public ResponseEntity<List<EnderecoDTO>> pesquisarPorCidade(@RequestParam(name = "cidade") String cidade) {
-    var enderecosDTO = this.gerenciarEnderecos.pesquisarPor(cidade, "cidade");
+    var enderecosDTO = this.gerenciarEnderecos.pesquisarPorCidade(cidade);
     return ResponseEntity.status(HttpStatus.OK).body(enderecosDTO);
   }
 
   @GetMapping(params = "estado")
   public ResponseEntity<List<EnderecoDTO>> pesquisarPorEstado(@RequestParam(name = "estado") String estado) {
-    var enderecosDTO = this.gerenciarEnderecos.pesquisarPor(estado, "estado");
+    var enderecosDTO = this.gerenciarEnderecos.pesquisarPorEstado(estado);
     return ResponseEntity.status(HttpStatus.OK).body(enderecosDTO);
   }
 
   @GetMapping(params = "rua")
   public ResponseEntity<List<EnderecoDTO>> pesquisarPorRua(@RequestParam(name = "rua") String rua) {
-    var enderecosDTO = this.gerenciarEnderecos.pesquisarPor(rua, "rua");
+    var enderecosDTO = this.gerenciarEnderecos.pesquisarPorRua(rua);
     return ResponseEntity.status(HttpStatus.OK).body(enderecosDTO);
   }
 
@@ -66,8 +66,8 @@ public class EnderecoController {
 
   @PutMapping("/{id}")
   public ResponseEntity<EnderecoDTO> editar(@PathVariable UUID id, @RequestBody @Valid EnderecoDTO requestEndereco) {
-    EnderecoDTO enderecoDTO = this.gerenciarEnderecos.atualizar(id, requestEndereco);
-    return ResponseEntity.status(HttpStatus.CREATED).body(enderecoDTO);
+    EnderecoDTO enderecoSaida = this.gerenciarEnderecos.atualizar(id, requestEndereco);
+    return ResponseEntity.status(HttpStatus.CREATED).body(enderecoSaida);
   }
 
   @DeleteMapping("/{id}")
