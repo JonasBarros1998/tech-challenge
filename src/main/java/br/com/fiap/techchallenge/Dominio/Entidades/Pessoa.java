@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.domain.Entidades;
+package br.com.fiap.techchallenge.Dominio.Entidades;
 
 import jakarta.persistence.*;
 

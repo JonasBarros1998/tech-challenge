@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

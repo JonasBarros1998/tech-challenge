@@ -1,17 +1,9 @@
 package br.com.fiap.techchallenge.View.Controller.Annotations;
 
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.server.ServerHttpRequest;
-import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.RequestScope;
-import org.springframework.web.context.request.ServletWebRequest;
-import jakarta.servlet.HttpMethodConstraintElement;
 
 @Component
 @RequestScope

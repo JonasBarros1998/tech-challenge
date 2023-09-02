@@ -1,6 +1,6 @@
-package br.com.fiap.techchallenge.domain.Entidades;
+package br.com.fiap.techchallenge.Dominio.Entidades;
 
-import br.com.fiap.techchallenge.domain.enums.EficienciaEnergeticaClassificacao;
+import br.com.fiap.techchallenge.Dominio.enums.EficienciaEnergeticaClassificacao;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
@@ -15,7 +15,7 @@ public class EficienciaEnergetica {
 	BigDecimal consumoEnergetico;
 
 	@Enumerated(EnumType.STRING)
-	@Column(length = 1)
+	@Column(columnDefinition = "varchar(1)")
 	EficienciaEnergeticaClassificacao classificacao;
 
 	@Column(nullable = false)

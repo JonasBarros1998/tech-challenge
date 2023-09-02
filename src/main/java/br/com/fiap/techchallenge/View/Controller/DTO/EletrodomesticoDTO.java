@@ -1,13 +1,15 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
-import br.com.fiap.techchallenge.domain.Entidades.EficienciaEnergetica;
-import br.com.fiap.techchallenge.domain.Entidades.Eletrodomestico;
+import br.com.fiap.techchallenge.Dominio.Entidades.EficienciaEnergetica;
+import br.com.fiap.techchallenge.Dominio.Entidades.Eletrodomestico;
+import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public record EletrodomesticoDTO (
@@ -29,19 +31,11 @@ public record EletrodomesticoDTO (
 	String marca,
 
 	@Valid
-	EficienciaEnergeticaDTO eficienciaEnergetica
-) {
+	EficienciaEnergeticaDTO eficienciaEnergetica,
 
-	public EletrodomesticoDTO(Eletrodomestico eletrodomestico) {
-		this(
-			eletrodomestico.getNome(),
-			eletrodomestico.getModelo(),
-			eletrodomestico.getPotencia(),
-			eletrodomestico.getVolts(),
-			eletrodomestico.getMarca(),
-			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica())
-		);
-	}
+	@Valid
+	List<UsuarioDTO> usuarios
+) {
 
 	public String getDataDeCadastro() {
 		return LocalDate.now().toString();
@@ -64,7 +58,7 @@ public record EletrodomesticoDTO (
 	}
 
 	public static Eletrodomestico converterDeEletrodomesticoDTOParaEletrodomestico(EletrodomesticoDTO eletrodomesticoDTO) {
-		return new Eletrodomestico(
+		var eletrodomestico = new Eletrodomestico(
 			eletrodomesticoDTO.nome(),
 			eletrodomesticoDTO.modelo(),
 			eletrodomesticoDTO.potencia(),
@@ -72,8 +66,19 @@ public record EletrodomesticoDTO (
 			eletrodomesticoDTO.marca(),
 			converterDeEficienciaEnergeticaDTOParaEficiencieEnergetica(eletrodomesticoDTO.eficienciaEnergetica)
 		);
+
+
+		if(eletrodomesticoDTO.usuarios.size() > 0) {
+			eletrodomesticoDTO.usuarios().stream().forEach((usuario) -> {
+				eletrodomestico.addUsuario(new Usuario(usuario.getEmail(), usuario.getId()));
+			});
+		}
+
+		return eletrodomestico;
+
 	}
 
+	/*
 	public static List<EletrodomesticoDTO> converterDeEletrodomesticoParaEletrodomesticoDTO(List<Eletrodomestico> eletrodomesticos) {
 		return eletrodomesticos.stream().map((eletrodomestico) -> new EletrodomesticoDTO(
 			eletrodomestico.getNome(),
@@ -81,11 +86,12 @@ public record EletrodomesticoDTO (
 			eletrodomestico.getPotencia(),
 			eletrodomestico.getVolts(),
 			eletrodomestico.getMarca(),
-			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica())
+			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica()),
 		)).toList();
 
-	}
+	}*/
 
+	/*
 	public static EletrodomesticoDTO converterDeEletrodomesticoParaEletrodomesticoDTO(Eletrodomestico eletrodomestico) {
 		return new EletrodomesticoDTO(
 			eletrodomestico.getNome(),
@@ -94,7 +100,8 @@ public record EletrodomesticoDTO (
 			eletrodomestico.getVolts(),
 			eletrodomestico.getMarca(),
 			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica())
+			//UsuarioDTO.converterDeUsuarioParaUsuarioDTO(eletrodomestico.getEletrodomesticosDosUsuarios())
 		);
-	}
+	}*/
 
 }

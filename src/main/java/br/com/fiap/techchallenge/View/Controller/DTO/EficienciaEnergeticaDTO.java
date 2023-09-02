@@ -1,6 +1,6 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
-import br.com.fiap.techchallenge.domain.enums.EficienciaEnergeticaClassificacao;
+import br.com.fiap.techchallenge.Dominio.enums.EficienciaEnergeticaClassificacao;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 
@@ -11,8 +11,8 @@ public record EficienciaEnergeticaDTO(
   EficienciaEnergeticaClassificacao classificacao,
   @PositiveOrZero(message = "deve ser maior que 0") BigDecimal porcentagemDeEconomia
 ) {
-    /*
-    public EficienciaEnergetica(BigDecimal consumoEnergetico, EficienciaEnergeticaClassificacao classificacao) {
+
+    public EficienciaEnergeticaDTO(BigDecimal consumoEnergetico, EficienciaEnergeticaClassificacao classificacao) {
         this(consumoEnergetico, classificacao, BigDecimal.ZERO);
-    }*/
+    }
 }

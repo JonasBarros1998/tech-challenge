@@ -1,12 +1,9 @@
 package br.com.fiap.techchallenge.Infra.Repository;
 
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
-import br.com.fiap.techchallenge.domain.Entidades.Dependente;
-import br.com.fiap.techchallenge.domain.Entidades.Pessoa;
+import br.com.fiap.techchallenge.Dominio.Entidades.Dependente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface DependenteRepository extends JpaRepository<Dependente, UUID> {

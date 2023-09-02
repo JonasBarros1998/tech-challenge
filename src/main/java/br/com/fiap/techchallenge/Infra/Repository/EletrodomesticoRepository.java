@@ -1,7 +1,10 @@
 package br.com.fiap.techchallenge.Infra.Repository;
 
-import br.com.fiap.techchallenge.domain.Entidades.Eletrodomestico;
+import br.com.fiap.techchallenge.Dominio.Entidades.Eletrodomestico;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.Repository;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -11,7 +14,9 @@ public interface EletrodomesticoRepository extends JpaRepository<Eletrodomestico
 
 	List<Eletrodomestico> findByNome(String nome);
 
-	List<Eletrodomestico> findByPotencia(BigDecimal potencia);
+	@Query(value = "select * from eletrodomesticos as eletrodomestico " +
+		"where eletrodomestico.potencia between :potenciaApartirDe and :potenciaDeAte", nativeQuery = true)
+	List<Eletrodomestico> findByPotencia(BigDecimal potenciaApartirDe, BigDecimal potenciaDeAte);
 
 	List<Eletrodomestico> findByModelo(String modelo);
 

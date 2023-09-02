@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.domain.Entidades;
+package br.com.fiap.techchallenge.Dominio.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;

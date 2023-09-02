@@ -3,15 +3,13 @@ package br.com.fiap.techchallenge.View.Controller;
 import br.com.fiap.techchallenge.Aplicacao.GerenciarPessoas;
 import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
-import br.com.fiap.techchallenge.domain.Entidades.Dependente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @RestController

@@ -1,0 +1,11 @@
+{
+  "nome": "Pintado Ferreira",
+  "nascimento": "2013-01-27",
+  "genero": "Machinho",
+  "cpf": "276.271.320-02",
+  "grau_parentesco": {
+    "pessoaID_1": "12345",
+    "pessoaID_2": "45678",
+    "parentesco": "marido"
+  }
+}

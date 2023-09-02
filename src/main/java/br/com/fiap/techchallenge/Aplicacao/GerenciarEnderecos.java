@@ -2,9 +2,7 @@ package br.com.fiap.techchallenge.Aplicacao;
 
 import br.com.fiap.techchallenge.Infra.Repository.EnderecoRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.EnderecoDTO;
-import br.com.fiap.techchallenge.View.Controller.Saida.ConsultarEndereco;
-import br.com.fiap.techchallenge.domain.Entidades.Endereco;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.fiap.techchallenge.Dominio.Entidades.Endereco;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

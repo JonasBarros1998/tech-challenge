@@ -1,9 +1,11 @@
-package br.com.fiap.techchallenge.domain.Entidades;
+package br.com.fiap.techchallenge.Dominio.Entidades;
 
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +34,12 @@ public class Eletrodomestico {
     @Embedded
     private EficienciaEnergetica eficienciaEnergetica;
 
+    @ManyToMany
+    @JoinTable(name = "eletrodomesticos_usuarios",
+      joinColumns = @JoinColumn(name = "eletrodomestico_id"),
+      inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+    private List<Usuario> usuario = new ArrayList<>();
+
     @Column(nullable = false, insertable = true)
     private final LocalDate dataDeCadastro = LocalDate.now();
 
@@ -51,6 +59,23 @@ public class Eletrodomestico {
         this.volts = volts;
         this.marca = marca;
         this.eficienciaEnergetica = eficienciaEnergetica;
+    }
+
+    public Eletrodomestico(
+      String nome,
+      String modelo,
+      BigDecimal potencia,
+      BigDecimal volts,
+      String marca,
+      EficienciaEnergetica eficienciaEnergetica,
+      List<Usuario> usuario) {
+        this.nome = nome;
+        this.modelo = modelo;
+        this.potencia = potencia;
+        this.volts = volts;
+        this.marca = marca;
+        this.eficienciaEnergetica = eficienciaEnergetica;
+        this.usuario = usuario;
     }
 
     public String getNome() {
@@ -79,6 +104,14 @@ public class Eletrodomestico {
 
     public String getDataDeCadastro() {
         return dataDeCadastro.toString();
+    }
+
+    public List<Usuario> getUsuario() {
+        return this.usuario;
+    }
+
+    public void addUsuario(Usuario usuario) {
+        this.usuario.add(usuario);
     }
 
 }

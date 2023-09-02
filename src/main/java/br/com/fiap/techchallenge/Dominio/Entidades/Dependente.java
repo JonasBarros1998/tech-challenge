@@ -1,8 +1,7 @@
-package br.com.fiap.techchallenge.domain.Entidades;
+package br.com.fiap.techchallenge.Dominio.Entidades;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity

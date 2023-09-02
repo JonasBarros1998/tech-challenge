@@ -3,16 +3,14 @@ package br.com.fiap.techchallenge.Aplicacao;
 import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
 import br.com.fiap.techchallenge.Infra.Repository.PessoaRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
-import br.com.fiap.techchallenge.View.Controller.Form.EditarPessoaForm;
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
-import br.com.fiap.techchallenge.domain.Entidades.Dependente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Dependente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

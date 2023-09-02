@@ -1,8 +1,7 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
-import br.com.fiap.techchallenge.View.Controller.Annotations.ClienteValidador;
-import br.com.fiap.techchallenge.domain.Entidades.Cliente;
-import br.com.fiap.techchallenge.domain.Entidades.Endereco;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Endereco;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

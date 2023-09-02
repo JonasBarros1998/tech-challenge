@@ -1,4 +1,4 @@
-package br.com.fiap.techchallenge.domain.enums;
+package br.com.fiap.techchallenge.Dominio.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
