@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -19,22 +18,13 @@ public class Cliente extends Pessoa {
 	@Column(nullable = false)
 	List<Endereco> enderecos;
 
-	@OneToMany(mappedBy = "pessoaId1", cascade = CascadeType.ALL)
-	List<Dependente> dependentes = new ArrayList<>();
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaId2")
+	List<Dependente> grauDeParentesco;
 
 	public Cliente() {}
 
 	public Cliente(String name, LocalDate nascimento, String genero, String cpf) {
 		super(name, nascimento, genero, cpf);
-	}
-
-	public Cliente(String name, LocalDate nascimento, String genero, String cpf, List<Dependente> dependentes) {
-		super(name, nascimento, genero, cpf);
-		this.dependentes = dependentes;
-	}
-
-	public List<Endereco> getEnderecos() {
-		return this.enderecos;
 	}
 
 	public LocalDate getDataDeCadastro() {
@@ -45,8 +35,8 @@ public class Cliente extends Pessoa {
 		this.enderecos = enderecos;
 	}
 
-	public List<Dependente> getDependentes() {
-		return this.dependentes;
-		
+	public List<Dependente> getGrauDeParentesco() {
+		return grauDeParentesco;
 	}
+
 }

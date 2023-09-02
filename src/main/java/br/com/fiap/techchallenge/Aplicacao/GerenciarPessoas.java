@@ -3,13 +3,17 @@ package br.com.fiap.techchallenge.Aplicacao;
 import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
 import br.com.fiap.techchallenge.Infra.Repository.PessoaRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
+import br.com.fiap.techchallenge.View.Controller.Form.EditarPessoaForm;
 import br.com.fiap.techchallenge.domain.Entidades.Cliente;
 import br.com.fiap.techchallenge.domain.Entidades.Dependente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class GerenciarPessoas {
@@ -31,11 +35,11 @@ public class GerenciarPessoas {
 		var pessoa = PessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
 		pessoas.add(pessoa);
 
-		pessoaDTO.getDependentes().stream()
+		pessoaDTO.getRelacionamento().stream()
 			.forEach((item) -> {
 				var dependente = PessoaDTO.converterDeDependenteDTOParaCliente(item);
 				pessoas.add(dependente);
-				dependentes.add(new Dependente(item.grauDeRelacionamento(), pessoa, dependente));
+				dependentes.add(new Dependente(item.parentesco(), pessoa, dependente));
 			});
 
 		this.pessoaRepository.saveAll(pessoas);
@@ -48,26 +52,36 @@ public class GerenciarPessoas {
 		return PessoaDTO.converterDeClienteParaPessoaDTO(clientes);
 	}
 
-	public PessoaDTO editar(PessoaDTO pessoaDTO, String idPessoa) {
+
+	@Transactional
+	public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, String idPessoa) {
 		Cliente cliente = this.pessoaRepository.findById(idPessoa).orElse(null);
 
 		cliente.setCpf(pessoaDTO.getCpf());
 		cliente.setNascimento(pessoaDTO.getNascimento());
 		cliente.setNome(pessoaDTO.getNome());
 		cliente.setGenero(pessoaDTO.getGenero());
-
 		this.pessoaRepository.save(cliente);
 
 		return PessoaDTO.converterDeClienteParaPessoaDTO(cliente);
 	}
 
-	public void remover(String idPessoa) {
-		this.pessoaRepository.deleteById(idPessoa);
+
+	@Transactional
+	public PessoaDTO alterarRelacionamento(UUID idDependente, PessoaDTO pessoaDTO) {
+
+		Cliente superior = PessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
+
+		Dependente dependente = this.dependenteRepository.pesquisarDependente(idDependente);
+		dependente.setPessoaId1(superior);
+		pessoaDTO.getRelacionamento().stream().forEach((value) -> dependente.setParentesco(value.parentesco()));
+		this.dependenteRepository.save(dependente);
+
+		return pessoaDTO;
 	}
 
-	public List<PessoaDTO> pesquisarPorNome(String nome) {
-		List<Cliente> clientes = this.pessoaRepository.findByNome(nome);
-		return PessoaDTO.converterDeClienteParaPessoaDTO(clientes);
+	public void remover(String idPessoa) {
+		this.pessoaRepository.deleteById(idPessoa);
 	}
 
 	public List<PessoaDTO> pesquisarPorGenero(String genero) {
@@ -75,4 +89,18 @@ public class GerenciarPessoas {
 		return PessoaDTO.converterDeClienteParaPessoaDTO(clientes);
 	}
 
+	public List<Cliente> pesquisarPorDependentes(String genero) {
+		var clientes = this.pessoaRepository.pesquisarPorDependentes(genero);
+		return clientes;
+	}
+
+	public List<PessoaDTO> pesquisarPorNome(String genero) {
+		List<Cliente> clientes = this.pessoaRepository.findByNome(genero);
+		return PessoaDTO.converterDeClienteParaPessoaDTO(clientes);
+	}
+
+	public List<Cliente> pesquisarPorParentesco(String cpf, String tipo) {
+		List<Cliente> clientes = this.pessoaRepository.pesquisarPorParentesco(cpf, tipo);
+		return clientes;
+	}
 }

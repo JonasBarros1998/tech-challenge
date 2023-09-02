@@ -1,6 +1,7 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
 import br.com.fiap.techchallenge.domain.Entidades.Cliente;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PessoaDTO {
+
 	@NotEmpty
 	@CPF
 	private String cpf;
@@ -21,10 +23,18 @@ public class PessoaDTO {
 	@NotNull
 	private LocalDate nascimento;
 
+
 	@NotEmpty
 	private String genero;
 
-	private List<DependenteDTO> dependentes;
+
+	private LocalDate dataDeCadastro;
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String parentesco;
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private List<DependenteDTO> relacionamento;
 
 	public PessoaDTO(Cliente cliente) {
 		this.cpf = cliente.getCpf();
@@ -33,12 +43,20 @@ public class PessoaDTO {
 		this.genero = cliente.getGenero();
 	}
 	
-	public PessoaDTO(Cliente cliente, List<DependenteDTO> dependentes) {
+	public PessoaDTO(Cliente cliente, List<DependenteDTO> relacionamento) {
 		this.cpf = cliente.getCpf();
 		this.nome = cliente.getNome();
 		this.nascimento = cliente.getNascimento();
 		this.genero = cliente.getGenero();
-		this.dependentes = dependentes;
+		this.relacionamento = relacionamento;
+	}
+
+	public PessoaDTO(Cliente cliente, String parentesco) {
+		this.cpf = cliente.getCpf();
+		this.nome = cliente.getNome();
+		this.nascimento = cliente.getNascimento();
+		this.genero = cliente.getGenero();
+		this.parentesco = parentesco;
 	}
 
 	public PessoaDTO() {}
@@ -46,7 +64,6 @@ public class PessoaDTO {
 	public static List<PessoaDTO> converterDeClienteParaPessoaDTO(List<Cliente> clientes) {
 		return clientes.stream().map(PessoaDTO::new).toList();
 	}
-
 
 	public static PessoaDTO converterDeClienteParaPessoaDTO(Cliente cliente) {
 		return new PessoaDTO(cliente);
@@ -86,7 +103,11 @@ public class PessoaDTO {
 		return genero;
 	}
 
-	public List<DependenteDTO> getDependentes() {
-		return dependentes;
+	public List<DependenteDTO> getRelacionamento() {
+		return relacionamento;
+	}
+
+	public String getParentesco() {
+		return parentesco;
 	}
 }
