@@ -7,7 +7,9 @@ import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
+import java.math.BigDecimal;
 
 @Service
 public class GerenciarEletrodomesticos {
@@ -22,14 +24,10 @@ public class GerenciarEletrodomesticos {
 
 	public EletrodomesticoDTO salvar(EletrodomesticoDTO eletrodomesticoDTO) {
 		var eletrodomestico = EletrodomesticoDTO.converterDeEletrodomesticoDTOParaEletrodomestico(eletrodomesticoDTO);
-
-		//eletrodomestico.addUsuario(new Usuario(eletrodomesticoDTO.usuarios().get(0).getEmail(), eletrodomesticoDTO.usuarios().get(0).getId()));
-
 		this.eletrodomesticoRepository.save(eletrodomestico);
 		return eletrodomesticoDTO;
 	}
 
-	/*
 	public List<EletrodomesticoDTO> pesquisarPorNome(String nome) {
 		var eletrodomesticos = this.eletrodomesticoRepository.findByNome(nome);
 		return EletrodomesticoDTO.converterDeEletrodomesticoParaEletrodomesticoDTO(eletrodomesticos);
@@ -43,7 +41,7 @@ public class GerenciarEletrodomesticos {
 	public List<EletrodomesticoDTO> pesquisarPorPotencia(BigDecimal potenciaApartirDe, BigDecimal potenciaDeAte) {
 		var eletrodomesticos = this.eletrodomesticoRepository.findByPotencia(potenciaApartirDe, potenciaDeAte);
 		return EletrodomesticoDTO.converterDeEletrodomesticoParaEletrodomesticoDTO(eletrodomesticos);
-	}*/
+	}
 
 	public void remover(UUID enderecoId) {
 		this.eletrodomesticoRepository.deleteById(enderecoId);

@@ -29,29 +29,31 @@ public class EletrodomesticosController {
         return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticoDTO);
     }
 
-    /*
-    @GetMapping(value = "/eletrodomesticos", params = "nome")
+    @GetMapping(params = "nome")
     ResponseEntity<List<EletrodomesticoDTO>> pesquisarPorNome(@RequestParam(name = "nome") String nome) {
         var eletrodomesticos = this.gerenciarEletrodomesticos.pesquisarPorNome(nome);
         return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticos);
     }
 
-    @GetMapping(value = "/eletrodomesticos/potencia", params = {"de", "ate"})
+    @GetMapping(params = "modelo")
+    ResponseEntity<List<EletrodomesticoDTO>> pesquisarPorPotencia(@RequestParam(name = "modelo") String modelo) {
+        var eletrodomesticos = this.gerenciarEletrodomesticos.pesquisarPorModelo(modelo);
+        return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticos);
+    }
+
+    @GetMapping(value = "/potencia", params = {"de", "ate"})
     ResponseEntity<List<EletrodomesticoDTO>> pesquisarPorPotencia(
-      @RequestParam(name = "apartirDe") BigDecimal potenciaApartirDe,
+      @RequestParam(name = "de") BigDecimal potenciaApartirDe,
       @RequestParam(name = "ate") BigDecimal potenciaDeAte
       )  {
         var eletrodomesticos = this.gerenciarEletrodomesticos.pesquisarPorPotencia(potenciaApartirDe, potenciaDeAte);
         return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticos);
     }
 
-    @GetMapping(value = "/eletrodomesticos", params = "modelo")
-    ResponseEntity<List<EletrodomesticoDTO>> pesquisarPorPotencia(@RequestParam(name = "modelo") String modelo) {
-        var eletrodomesticos = this.gerenciarEletrodomesticos.pesquisarPorModelo(modelo);
-        return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticos);
-    }*/
-
-
-
+    @PutMapping
+    ResponseEntity<EletrodomesticoDTO> editar(@RequestBody @Valid EletrodomesticoDTO eletrodomesticoDTO) {
+        this.gerenciarEletrodomesticos.salvar(eletrodomesticoDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticoDTO);
+    }
 
 }
