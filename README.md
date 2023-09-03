@@ -57,7 +57,17 @@ POST /api/usuarios
 }
 ```
 
+- resposta do endpoint
+
+```json
+{
+  "email": "jonas@outlook.com",
+  "id": "8cf70fb6-c82a-40ca-9fe0-d2236b38870e"
+}
+```
+
 #### Descrição dos campos
+
 | campo | descrição |
 | :--- | :--- |
 | email | `email do usuario` |
@@ -86,7 +96,7 @@ POST /api/enderecos
 }
 ```
 
-### response
+- resposta do endpoint
 
 ```json
 {
@@ -102,7 +112,7 @@ POST /api/enderecos
 }
 ```
 
-### Descrição de cada campo
+- Descrição dos campos
 
 | campo | descrição |
 | :--- | :--- |
@@ -472,6 +482,7 @@ POST /api/eletrodomesticos
 ```
 
 - Descrição de cada campo
+
 | campo | descrição |
 | :--- | :--- |
 | nome | `nome` |
