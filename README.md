@@ -289,11 +289,7 @@ DELETE /api/enderecos/ENDERECO_ID
 ## Pessoas
 O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
 
-```http
-POST /api/pessoas
-```
-
-# Cadastrar uma pessoa e seus dependentes
+#### Cadastrar uma pessoa e seus dependentes
 
 ```http
 POST /api/pessoas
@@ -325,13 +321,176 @@ POST /api/pessoas
 | cpf | `cpf do cliente` |
 | genero | `genero do cliente` |
 | nascimento | `data de nascimento do cliente. Formato permitido: yyyy-mm-dd` |
-| usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) |
+| usuarioID | `id do usuario no formato UUID` [mais informações]() |
 | relacionamento.nome | `nome do dependente` |
 | relacionamento.parentesco | `tipo de parentesco, podendo ser filho, esposa, sobrinho, marido etc...` |
 | relacionamento.genero | `genero do dependente` |
 | relacionamento.nascimento | `data de nascimento do dependente. Formato permitido: yyyy-mm-dd` |
 | relacionamento.cpf | `cpf do cliente` |
-| relacionamento.usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) |
+| relacionamento.usuarioID | `id do usuario no formato UUID` [mais informações]() |
+
+
+#### Pesquisar por dependentes
+- A partir do ID de um superior, ou seja, a pessoa que esteja na raiz da árvore, é possível consultar todos os seus dependentes
+
+```http
+GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
+```
+
+- Ao pesquisar deve retornar um json no formato abaixo, listando todos os seus dependentes
+
+```json
+[
+	{
+		"cpf": "15863220015",
+		"nome": "Junior",
+		"nascimento": "2012-01-27",
+		"genero": "Masculino",
+		"dataDeCadastro": "2023-09-03",
+		"grauDeParentesco": [
+			{
+				"parentesco": "sobrinho"
+			}
+		]
+	}
+]
+```
+
+#### Pesquisar por nome e por genero
+
+- Nessa pesquisa é possível consultar todas as pessoas por nome ou genero
+  
+```http
+GET /api/pessoas?genero=TIPO_DO_GENERO
+```
+```http
+GET /api/pessoas?nome=NOME_DA_PESSOA
+```
+
+- Ambos os endpoint retornam o mesmo json de acordo com a consulta
+```json
+[
+	{
+		"cpf": "15863220015",
+		"nome": "Junior",
+		"nascimento": "2012-01-27",
+		"genero": "Feminino"
+	}
+]
+```
+
+#### Pesquisar por parentesco
+- Com esse endpoint é possível fazer relacionamentos familiares entre os membros da casa
+
+```http
+GET /api/pessoas/ID_DO_SUPERIOR/parentesco?tipo=TIPO_DE_PARENTESCO
+```
+
+- Retorno do endpoint
+``` json
+[
+	{
+		"cpf": "15863220015",
+		"nome": "Junior",
+		"nascimento": "2013-01-27",
+		"genero": "Masculino",
+		"dataDeCadastro": "2023-09-03",
+		"grauDeParentesco": [
+			{
+				"parentesco": "filho"
+			}
+		]
+	}
+]
+```
+
+#### Editar uma pessoa
+- Com essa API é possível editar qualquer informação relacionada a pessoa
+
+```http
+PUT /api/pessoas/PESSOA_CPF
+```
+  
+- body
+```json
+{
+	"nome": "Junior",
+	"nascimento": "2013-01-27",
+	"genero": "Masculino"
+}
+```
+
+- retorno
+```json
+{
+	"cpf": "15863220015",
+	"nome": "Junior",
+	"nascimento": "2013-01-27",
+	"genero": "Masculino"
+}
+```
+
+#### Remover uma pessoa
+- O retorno do endpoint é o tipo 204
+
+```http
+PUT /api/pessoas/PESSOA_CPF
+```
+
+
+## Eletrodomésticos
+
+
+#### Cadastrar um novo eletrodomestico
+- O endpoint tem como objetivo cadastrar os eletrodomésticos dos usuários em nosso sistema
+
+```http
+POST /api/eletrodomesticos
+```
+
+- body
+```json
+{
+	"nome": "Galedeira",
+	"modelo": "1234",
+	"potencia": 900,
+	"volts": 220,
+	"marca": "Brastemp",
+	"eficienciaEnergetica": {
+		"classificacao": "A",
+		"consumoEnergetico": 200,
+		"porcentagemDeEconomia": 10
+	},
+	"usuarios": [
+		{
+			"id": "c5cba95f-2b97-40e0-8dd6-d782d6b0b3a3"
+		},
+		{
+			"id": "d1bc66e7-105c-4493-a7ca-3b96c56a357a"
+		}
+	]
+}
+```
+
+### Descrição de cada campo
+| campo | descrição |
+| :--- | :--- |
+| nome | `nome` |
+| modelo | `modelo` |
+| potencia | `potência em watts do aparelho, por exemplo: 1800, 300, 600` |
+| volts | `voltagem utilizada para ligar o aparelho, por exemplo: 220, 110, 127 etc...` |
+| marca | `marca` |
+| classificacao | `A letra que está relacionada ao aparelho na tabela de de eficiência energetica do Inmetro, só será permitido uma das seguintes classificações: A, B, C, D, E, F ou G` |
+| consumoEnergetico | `consumo energético por hora` |
+| porcentagemDeEconomia | `Campo opcional. Porcentagem de economia do aparelho, por exemplo 10, 20, 30. Esse campo é utilizado para os modelos fabricados antes de 2021`
+| dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` |
+| usuarios.id | `envie os IDs usuários que utilizam esse aparelho` |
+
+
+
+
+
+
 
 
 
