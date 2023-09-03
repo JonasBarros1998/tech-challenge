@@ -287,6 +287,51 @@ DELETE /api/enderecos/ENDERECO_ID
 
 
 ## Pessoas
+O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
+
+```http
+POST /api/pessoas
+```
+
+# Cadastrar uma pessoa e seus dependentes
+
+```http
+POST /api/pessoas
+```
+
+```json
+{
+	"nome": "Jonas",
+	"cpf": "36979184008",
+	"genero": "Masculino",
+	"nascimento": "1985-06-27",
+	"usuarioID": "5cfb8984-77c3-4800-8144-b75a62353573",
+	"relacionamento": [
+		{
+			"nome": "Jonas 2",
+			"parentesco": "sobrinho",
+			"genero": "Masculino",
+			"nascimento": "2012-01-27",
+			"cpf": "15863220015",
+			"usuarioID": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
+		}
+	]
+}
+```
+
+| campo | descrição |
+| :--- | :--- |
+| nome | `nome do cliente` |
+| cpf | `cpf do cliente` |
+| genero | `genero do cliente` |
+| nascimento | `data de nascimento do cliente. Formato permitido: yyyy-mm-dd` |
+| usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) |
+| relacionamento.nome | `nome do dependente` |
+| relacionamento.parentesco | `tipo de parentesco, podendo ser filho, esposa, sobrinho, marido etc...` |
+| relacionamento.genero | `genero do dependente` |
+| relacionamento.nascimento | `data de nascimento do dependente. Formato permitido: yyyy-mm-dd` |
+| relacionamento.cpf | `cpf do cliente` |
+| relacionamento.usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) |
 
 
 
