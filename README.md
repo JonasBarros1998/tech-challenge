@@ -126,12 +126,13 @@ POST /api/enderecos
 | usuario.id | `Após a inserção do usuário, insira o ID dele nesse campo` como cadastrar [usuários](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) | 
 
 #### Pesquisar todos os endereços
+- Ao pesquisar por enderedo, o retorno é uma lista de endereços que foram incluídos na aplicação
 
 ```http
 GET /api/enderecos
 ```
-Retorna uma lista de endereços que foram incluídos na aplicação
 
+- resposta do endpoint
 ```json
 [
   {
@@ -161,6 +162,7 @@ Retorna uma lista de endereços que foram incluídos na aplicação
 GET /api/enderecos/ENDERECO_ID
 ```
 
+- resposta do endpoint
 ```json
 [
   {
@@ -176,8 +178,7 @@ GET /api/enderecos/ENDERECO_ID
 ```
 
 #### Pesquisar endereço por bairro, rua, cidade ou estado.
-
-O retorno dessas rota serão exatamente iguais, mudando apenas os `query parameters`
+- O retorno dessas rota serão exatamente iguais, mudando apenas os `query parameters`
 
 ```http
 GET /api/enderecos?bairro=NOME_DO_BAIRRO
@@ -192,7 +193,7 @@ GET /api/enderecos?cidade=NOME_DA_CIDADE
 GET /api/enderecos?estado=NOME_DO_ESTADO
 ```
 
-#### Examplo de retorno das rotas acima
+#### resposta dos endpoints
 ```json
 [
   {
@@ -215,9 +216,8 @@ GET /api/enderecos?estado=NOME_DO_ESTADO
 ```http
 GET /api/enderecos?cpf=CPF_DO_CLIENTE
 ```
-
-##### retorno da API 
-
+ 
+- resposta do endpoint
 ```json
 [
   {
@@ -258,6 +258,7 @@ GET /api/enderecos?cpf=CPF_DO_CLIENTE
 GET /api/enderecos/ENDERECO_ID/pessoas
 ```
 
+- resposta do endpoint
 ```json
 [
   {
@@ -276,6 +277,7 @@ GET /api/enderecos/ENDERECO_ID/pessoas
 PUT /api/enderecos/ENDERECO_ID
 ```
 
+- resposta do endpoint
 ```json
 {
   "cidade": "São Paulo",
@@ -304,6 +306,8 @@ O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
 POST /api/pessoas
 ```
 
+- body da requisição
+
 ```json
 {
   "nome": "Jonas",
@@ -323,6 +327,30 @@ POST /api/pessoas
   ]
 }
 ```
+
+- resposta do endpoint
+
+```json
+{
+  "nome": "Jonas",
+  "cpf": "36979184008",
+  "genero": "Masculino",
+  "nascimento": "1985-06-27",
+  "usuarioID": "5cfb8984-77c3-4800-8144-b75a62353573",
+  "relacionamento": [
+    {
+      "nome": "Jonas 2",
+      "parentesco": "sobrinho",
+      "genero": "Masculino",
+      "nascimento": "2012-01-27",
+      "cpf": "15863220015",
+      "usuarioID": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
+    }
+  ]
+}
+```
+
+- Descrição dos campos
 
 | campo | descrição |
 | :--- | :--- |
@@ -429,7 +457,7 @@ PUT /api/pessoas/PESSOA_CPF
 }
 ```
 
-- retorno
+- retorno do endpoint
 ```json
 {
   "cpf": "15863220015",
