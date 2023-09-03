@@ -596,7 +596,6 @@ GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
 | campo | descrição |
 | :--- | :--- |
 | `de` | minimo de potencia que gostaria de filtrar | 
-
 | `ate` | maximo de potencia que gostaria de filtrar |
 
 - body
