@@ -16,7 +16,7 @@ public class Usuario {
 	@Column(length = 200, nullable = false)
 	private String email;
 
-	@ManyToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy = "usuario", cascade = CascadeType.DETACH)
 	private List<Eletrodomestico> usuario;
 
 	public Usuario(String email, UUID id) {
@@ -26,6 +26,10 @@ public class Usuario {
 
 	public Usuario(String email) {
 		this.email = email;
+	}
+
+	public Usuario(UUID id) {
+		this.id = id;
 	}
 
 	public Usuario() {}

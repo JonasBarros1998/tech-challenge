@@ -10,7 +10,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EletrodomesticoDTO {
@@ -33,6 +32,7 @@ public class EletrodomesticoDTO {
 	private String marca;
 
 	@Valid
+	@NotNull
 	private EficienciaEnergeticaDTO eficienciaEnergetica;
 
 	@Valid
@@ -57,7 +57,6 @@ public class EletrodomesticoDTO {
 		this.eficienciaEnergetica = eficienciaEnergetica;
 		this.usuarios = usuarios;
 	}
-
 
 	private static EficienciaEnergeticaDTO converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(EficienciaEnergetica eficienciaEnergetica) {
 		return new EficienciaEnergeticaDTO(
@@ -122,7 +121,7 @@ public class EletrodomesticoDTO {
 
 		if(eletrodomesticoDTO.usuarios.size() > 0) {
 			eletrodomesticoDTO.getUsuarios().stream().forEach((usuario) -> {
-				eletrodomestico.addUsuario(new Usuario(usuario.getEmail(), usuario.getId()));
+				eletrodomestico.addUsuario(new Usuario(usuario.id()));
 			});
 		}
 
@@ -140,6 +139,18 @@ public class EletrodomesticoDTO {
 			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica()),
 			null
 		)).toList();
+	}
+
+	public static EletrodomesticoDTO converterDeEletrodomesticoParaEletrodomesticoDTO(Eletrodomestico eletrodomestico) {
+    return new EletrodomesticoDTO(
+			eletrodomestico.getNome(),
+			eletrodomestico.getModelo(),
+			eletrodomestico.getPotencia(),
+			eletrodomestico.getVolts(),
+			eletrodomestico.getMarca(),
+			converterDeEficienciaEnergeticaParaEficiencieEnergeticaDTO(eletrodomestico.getEficienciaEnergetica()),
+			null
+    );
 	}
 
 }

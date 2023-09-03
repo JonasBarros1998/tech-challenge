@@ -1,9 +1,11 @@
 package br.com.fiap.techchallenge.Aplicacao;
 
+import br.com.fiap.techchallenge.Aplicacao.Exceptions.InformacaoNaoEncontrada;
+import br.com.fiap.techchallenge.Dominio.Entidades.EficienciaEnergetica;
 import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import br.com.fiap.techchallenge.Infra.Repository.EletrodomesticoRepository;
+import br.com.fiap.techchallenge.View.Controller.DTO.AdicionarUsuarioAoEletrodomesticoDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.EletrodomesticoDTO;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +47,41 @@ public class GerenciarEletrodomesticos {
 
 	public void remover(UUID enderecoId) {
 		this.eletrodomesticoRepository.deleteById(enderecoId);
+	}
+
+	public EletrodomesticoDTO editarEletrodomestico(EletrodomesticoDTO eletrodomesticoDTO, UUID id) {
+
+		var eletrodomestico = this.eletrodomesticoRepository.findById(id)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("Nao foi possivel buscar o ID do eletrodomestico"));
+
+		eletrodomestico.setMarca(eletrodomesticoDTO.getMarca());
+		eletrodomestico.setNome(eletrodomesticoDTO.getNome());
+		eletrodomestico.setVolts(eletrodomesticoDTO.getVolts());
+		eletrodomestico.setModelo(eletrodomesticoDTO.getModelo());
+
+		eletrodomestico.setEficienciaEnergetica(
+			new EficienciaEnergetica(
+				eletrodomesticoDTO.getEficienciaEnergetica().consumoEnergetico(),
+				eletrodomesticoDTO.getEficienciaEnergetica().classificacao(),
+				eletrodomesticoDTO.getEficienciaEnergetica().porcentagemDeEconomia())
+		);
+
+		this.eletrodomesticoRepository.save(eletrodomestico);
+		return EletrodomesticoDTO.converterDeEletrodomesticoParaEletrodomesticoDTO(eletrodomestico);
+	}
+
+
+	public EletrodomesticoDTO adicionarUsuarioAoEletrodomestico(AdicionarUsuarioAoEletrodomesticoDTO novoUsuario, UUID eletrodomesticoID) {
+		var eletrodomestico = this.eletrodomesticoRepository.findById(eletrodomesticoID)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("Nao foi possivel buscar o ID do eletrodomestico"));
+
+		eletrodomestico.addUsuario(new Usuario(novoUsuario.usuario()));
+		eletrodomesticoRepository.save(eletrodomestico);
+		return EletrodomesticoDTO.converterDeEletrodomesticoParaEletrodomesticoDTO(eletrodomestico);
+	}
+
+	public void removerEletrodomestico(UUID eletrodomesticoID) {
+		this.eletrodomesticoRepository.deleteById(eletrodomesticoID);
 	}
 
 }

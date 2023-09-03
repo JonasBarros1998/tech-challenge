@@ -16,9 +16,10 @@ public class GerenciarUsuarios {
 		this.usuarioRepository = usuarioRepository;
 	}
 
-	public void salvar(UsuarioDTO usuarioDTO) {
+	public UsuarioDTO salvar(UsuarioDTO usuarioDTO) {
 		Usuario usuario = UsuarioDTO.converterDeUsuarioDTOParaUsuario(usuarioDTO);
 		this.usuarioRepository.save(usuario);
+		return UsuarioDTO.converterDeUsuarioParaUsuarioDTO(usuario);
 	}
 
 }

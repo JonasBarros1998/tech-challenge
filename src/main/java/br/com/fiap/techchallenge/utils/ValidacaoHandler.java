@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.utils;
 
+import br.com.fiap.techchallenge.Aplicacao.Exceptions.InformacaoNaoEncontrada;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -64,6 +65,18 @@ public class ValidacaoHandler {
         ErroForm erroForm = new ErroForm(
           "eficienciaEnergetica.classificacao",
           "A classificação deve conter os seguintes valores: A, B, C, D, E, F ou G");
+        erroFormList.add(erroForm);
+
+        return erroFormList;
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InformacaoNaoEncontrada.class)
+    public List<ErroForm> handler(InformacaoNaoEncontrada exception) {
+        List<ErroForm> erroFormList = new ArrayList<>();
+        ErroForm erroForm = new ErroForm(
+          exception.getMessage(),
+          "");
         erroFormList.add(erroForm);
 
         return erroFormList;

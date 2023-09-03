@@ -34,7 +34,7 @@ public class Eletrodomestico {
     @Embedded
     private EficienciaEnergetica eficienciaEnergetica;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "eletrodomesticos_usuarios",
       joinColumns = @JoinColumn(name = "eletrodomestico_id"),
       inverseJoinColumns = @JoinColumn(name = "usuario_id"))
@@ -110,8 +110,31 @@ public class Eletrodomestico {
         return this.usuario;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setPotencia(BigDecimal potencia) {
+        this.potencia = potencia;
+    }
+
+    public void setVolts(BigDecimal volts) {
+        this.volts = volts;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public void setEficienciaEnergetica(EficienciaEnergetica eficienciaEnergetica) {
+        this.eficienciaEnergetica = eficienciaEnergetica;
+    }
+
     public void addUsuario(Usuario usuario) {
         this.usuario.add(usuario);
     }
-
 }

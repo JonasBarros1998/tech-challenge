@@ -22,8 +22,8 @@ public class UsuarioController {
 		this.gerenciarUsuarios = gerenciarUsuarios;
 	}
 	@PostMapping
-	public ResponseEntity<Void> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
-		this.gerenciarUsuarios.salvar(usuarioDTO);
-		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	public ResponseEntity<UsuarioDTO> salvar(@RequestBody @Valid UsuarioDTO usuarioDTO) {
+		var usuario = this.gerenciarUsuarios.salvar(usuarioDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
 	}
 }

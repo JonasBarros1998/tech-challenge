@@ -1,7 +1,7 @@
 package br.com.fiap.techchallenge.View.Controller;
 
 import br.com.fiap.techchallenge.Aplicacao.GerenciarEletrodomesticos;
-import br.com.fiap.techchallenge.Dominio.Entidades.Eletrodomestico;
+import br.com.fiap.techchallenge.View.Controller.DTO.AdicionarUsuarioAoEletrodomesticoDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.EletrodomesticoDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/eletrodomesticos")
@@ -50,10 +51,24 @@ public class EletrodomesticosController {
         return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticos);
     }
 
-    @PutMapping
-    ResponseEntity<EletrodomesticoDTO> editar(@RequestBody @Valid EletrodomesticoDTO eletrodomesticoDTO) {
-        this.gerenciarEletrodomesticos.salvar(eletrodomesticoDTO);
+    @PutMapping(value = "/{id}")
+    ResponseEntity<EletrodomesticoDTO> editar(@PathVariable("id") UUID id, @RequestBody @Valid EletrodomesticoDTO eletrodomesticoDTO) {
+        this.gerenciarEletrodomesticos.editarEletrodomestico(eletrodomesticoDTO, id);
         return ResponseEntity.status(HttpStatus.OK).body(eletrodomesticoDTO);
+    }
+
+    @PostMapping(value = "/{id}/usuario")
+    ResponseEntity<EletrodomesticoDTO> adicionarNovoUsuarioAoEletrodomestico(
+      @PathVariable("id") UUID id,
+      @Valid @RequestBody AdicionarUsuarioAoEletrodomesticoDTO eledomesticoUsuarioDTO) {
+        var novoUsuario = this.gerenciarEletrodomesticos.adicionarUsuarioAoEletrodomestico(eledomesticoUsuarioDTO, id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity<Void> removerEletrodomesticos(@PathVariable("id") UUID eletrodomesticoID) {
+        this.gerenciarEletrodomesticos.removerEletrodomestico(eletrodomesticoID);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }

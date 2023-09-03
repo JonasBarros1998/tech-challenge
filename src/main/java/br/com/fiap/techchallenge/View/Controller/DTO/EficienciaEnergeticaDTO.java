@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 public record EficienciaEnergeticaDTO(
   @NotNull @PositiveOrZero(message = "deve ser maior que 0") BigDecimal consumoEnergetico,
-  EficienciaEnergeticaClassificacao classificacao,
+  @NotNull EficienciaEnergeticaClassificacao classificacao,
   @PositiveOrZero(message = "deve ser maior que 0") BigDecimal porcentagemDeEconomia
 ) {
 

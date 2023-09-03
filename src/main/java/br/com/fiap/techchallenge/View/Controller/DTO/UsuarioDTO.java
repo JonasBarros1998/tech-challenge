@@ -6,26 +6,17 @@ import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import java.util.List;
 import java.util.UUID;
 
-public class UsuarioDTO {
-
-	private String email;
-
-	private UUID id;
-
-	public static List<Usuario> converterDeUsuarioDTOParaUsuario(List<UsuarioDTO> usuariosDTO) {
-		return usuariosDTO.stream().map((usuario) -> new Usuario(usuario.getEmail(), usuario.getId())).toList();
-	}
+public record UsuarioDTO(
+	String email,
+	UUID id
+) {
 
 	public static Usuario converterDeUsuarioDTOParaUsuario(UsuarioDTO usuarioDTO) {
-		return new Usuario(usuarioDTO.getEmail());
+		return new Usuario(usuarioDTO.email());
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public UUID getId() {
-		return id;
+	public static UsuarioDTO converterDeUsuarioParaUsuarioDTO(Usuario usuario) {
+		return new UsuarioDTO(usuario.getEmail(), usuario.getId());
 	}
 }
 
