@@ -2,6 +2,7 @@ package br.com.fiap.techchallenge.View.Controller;
 
 import br.com.fiap.techchallenge.Aplicacao.GerenciarPessoas;
 import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
+import br.com.fiap.techchallenge.View.Controller.DTO.EditarDadosDaPessoaDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
 import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import jakarta.validation.Valid;
@@ -33,7 +34,7 @@ public class PessoasController {
     }
 
     @PutMapping("/{cpf}")
-    public ResponseEntity<PessoaDTO> editar(@PathVariable String cpf, @RequestBody @Valid PessoaDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> editar(@PathVariable String cpf, @RequestBody @Valid EditarDadosDaPessoaDTO pessoaDTO) {
         PessoaDTO pessoa = this.gerenciarPessoas.editarPessoa(pessoaDTO, cpf);
         return ResponseEntity.status(HttpStatus.OK).body(pessoa);
     }
@@ -79,5 +80,6 @@ public class PessoasController {
         List<Cliente> pessoas = this.gerenciarPessoas.pesquisarPorParentesco(cpf, tipo);
         return ResponseEntity.status(HttpStatus.OK).body(pessoas);
     }
+
 
 }

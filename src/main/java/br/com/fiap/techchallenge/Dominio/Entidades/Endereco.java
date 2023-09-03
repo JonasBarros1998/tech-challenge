@@ -1,10 +1,12 @@
 package br.com.fiap.techchallenge.Dominio.Entidades;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -15,43 +17,43 @@ public class Endereco {
   @GeneratedValue(strategy = GenerationType.UUID)
   private UUID id;
 
-  @NotEmpty
-  @Pattern(regexp = "\\d{5}-\\d{3}", message = "Deve estar no formato 00000-000")
   @Column(length = 9, nullable = false)
   private String cep;
 
-  @NotEmpty
   @Column(length = 20, nullable = false)
   private String estado;
 
-  @NotEmpty
-  @Column(nullable = false, length = 255)
+  @Column(nullable = false)
   private String rua;
 
-  @NotEmpty
   @Column(nullable = false, length = 10)
   private String numero;
 
-  @NotEmpty
   @Column(nullable = false, length = 100)
   private String bairro;
 
-  @NotEmpty
   @Column(length = 50, nullable = false)
   private String cidade;
 
-  @JsonBackReference()
-  @ManyToOne()
-  private Cliente cliente;
+  @ManyToOne(cascade = CascadeType.DETACH)
+  @JsonBackReference
+  private Usuario usuario;
   
-  public Endereco(String rua, String numero, String bairro, String cidade, String estado, String cep, Cliente cliente) {
+  public Endereco(
+    String rua,
+    String numero,
+    String bairro,
+    String cidade,
+    String estado,
+    String cep,
+    Usuario usuario) {
     this.rua = rua;
     this.numero = numero;
     this.bairro = bairro;
     this.cidade = cidade;
     this.estado = estado;
     this.cep = cep;
-    this.cliente = cliente;
+    this.usuario = usuario;
   }
 
   public Endereco() {}
@@ -108,7 +110,8 @@ public class Endereco {
     this.cidade = cidade;
   }
 
-  public Cliente getCliente() {
-    return cliente;
+  public Usuario getUsuario() {
+    return usuario;
   }
+
 }

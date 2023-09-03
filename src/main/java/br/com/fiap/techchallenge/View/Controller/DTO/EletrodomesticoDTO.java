@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public class EletrodomesticoDTO {
@@ -37,8 +38,6 @@ public class EletrodomesticoDTO {
 
 	@Valid
 	private List<UsuarioDTO> usuarios;
-
-	private LocalDate dataCadastro;
 
 	public EletrodomesticoDTO(
 		String nome,

@@ -1,8 +1,12 @@
 package br.com.fiap.techchallenge.Aplicacao;
 
+import br.com.fiap.techchallenge.Aplicacao.Exceptions.InformacaoNaoEncontrada;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Pessoa;
 import br.com.fiap.techchallenge.Infra.Repository.EnderecoRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.EnderecoDTO;
 import br.com.fiap.techchallenge.Dominio.Entidades.Endereco;
+import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,14 +28,15 @@ public class GerenciarEnderecos {
 	}
 
 	public EnderecoDTO salvar(EnderecoDTO enderecoDTO) {
-		var endereco = EnderecoDTO.converterDeEnderecoParaEnderecoDTO(enderecoDTO);
+		var endereco = EnderecoDTO.converterDeEnderecoDTOParaEndereco(enderecoDTO);
 		this.enderecoRepository.save(endereco);
 		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(endereco);
 	}
 
 	@Transactional
 	public EnderecoDTO atualizar(UUID id, EnderecoDTO enderecoDTO) {
-		var endereco = this.enderecoRepository.findById(id).orElse(null);
+		var endereco = this.enderecoRepository.findById(id)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("ID do endereco nao encontrado"));
 		endereco = EnderecoDTO.atualizarEndereco(endereco, enderecoDTO);
 		this.enderecoRepository.save(endereco);
 		return EnderecoDTO.formatarRespostaDeEnderecoParaEditarEnderecoSaida(endereco);
@@ -39,28 +44,27 @@ public class GerenciarEnderecos {
 
 	public List<EnderecoDTO> listar() {
 		var enderecos = this.enderecoRepository.findAll();
-
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(enderecos);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(enderecos);
 	}
 
 	public List<EnderecoDTO> pesquisarPorBairro(String bairro) {
 		this.enderecos = this.enderecoRepository.findByBairro(bairro);
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(this.enderecos);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(this.enderecos);
 	}
 
 	public List<EnderecoDTO> pesquisarPorCidade(String cidade) {
 		this.enderecos = this.enderecoRepository.findByCidade(cidade);
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(this.enderecos);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(this.enderecos);
 	}
 
 	public List<EnderecoDTO> pesquisarPorRua(String rua) {
 		this.enderecos = this.enderecoRepository.findByRua(rua);
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(this.enderecos);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(this.enderecos);
 	}
 
 	public List<EnderecoDTO> pesquisarPorEstado(String estado) {
 		this.enderecos = this.enderecoRepository.findByEstado(estado);
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(this.enderecos);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(this.enderecos);
 	}
 
 	public List<EnderecoDTO> pesquisarPor(UUID id) {
@@ -71,12 +75,28 @@ public class GerenciarEnderecos {
 				(enderecoDoCliente) -> endereco.add(enderecoDoCliente),
 				() -> new ArrayList<EnderecoDTO>());
 
-		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(endereco);
+		return EnderecoDTO.converterDeEnderecoDTOParaEndereco(endereco);
+	}
 
+	public List<EnderecoDTO> pesquisarEnderecoPorCpf(String cpf) {
+		var enderecos = this.enderecoRepository.pesquisarEnderecoPorCpf(cpf);
+		return EnderecoDTO.converterDeEnderecoParaEnderecoDTO(enderecos);
+	}
+
+	public List<PessoaDTO> pesquisarEnderecoPorPessoa(UUID endereco) {
+		var enderecos = this.enderecoRepository.pesquisarPorUsuariosPorIdDoEndereco(endereco)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("ID do endereco nao encontrado"));
+		var clientes = enderecos.stream().map((clienteItem) -> {
+			var cliente = clienteItem.getUsuario().getCliente();
+			return new Cliente(cliente.getNome(), cliente.getDataDeCadastro(), cliente.getGenero(), cliente.getCpf());
+		}).toList();
+		return PessoaDTO.converterDeClienteParaPessoaDTO(clientes);
 	}
 
 	public void remover(UUID id) {
 			this.enderecoRepository.deleteById(id);
 	}
+
+
 
 }

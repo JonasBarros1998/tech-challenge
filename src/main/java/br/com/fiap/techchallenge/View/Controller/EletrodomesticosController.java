@@ -2,14 +2,17 @@ package br.com.fiap.techchallenge.View.Controller;
 
 import br.com.fiap.techchallenge.Aplicacao.GerenciarEletrodomesticos;
 import br.com.fiap.techchallenge.View.Controller.DTO.AdicionarUsuarioAoEletrodomesticoDTO;
+import br.com.fiap.techchallenge.View.Controller.DTO.ConsumoEnergeticoDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.EletrodomesticoDTO;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,6 +66,16 @@ public class EletrodomesticosController {
       @Valid @RequestBody AdicionarUsuarioAoEletrodomesticoDTO eledomesticoUsuarioDTO) {
         var novoUsuario = this.gerenciarEletrodomesticos.adicionarUsuarioAoEletrodomestico(eledomesticoUsuarioDTO, id);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
+    }
+
+    @PutMapping(value = "/{eletrodomesticoID}/consumo")
+    ResponseEntity<ConsumoEnergeticoDTO> calcularConsumoEnergeticoPorAparelho(
+      @RequestBody @Valid ConsumoEnergeticoDTO consumoEnergeticoDTO,
+      @PathVariable("eletrodomesticoID") UUID eletrodomesticoID
+    ) {
+        var consumo = this.gerenciarEletrodomesticos
+          .calcularConsumoEnergeticoPorAparelho(eletrodomesticoID, consumoEnergeticoDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(consumo);
     }
 
     @DeleteMapping(value = "/{id}")

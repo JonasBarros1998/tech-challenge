@@ -1,6 +1,8 @@
 package br.com.fiap.techchallenge.Dominio.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,13 +15,12 @@ public class Cliente extends Pessoa {
 	@Column(insertable = true)
 	private final LocalDate dataDeCadastro = LocalDate.now();
 
-	@JsonInclude(value = JsonInclude.Include.NON_NULL)
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-	@Column(nullable = false)
-	List<Endereco> enderecos;
-
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaId2")
 	List<Dependente> grauDeParentesco;
+
+	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
+	@JsonBackReference
+	Usuario usuario;
 
 	public Cliente() {}
 
@@ -31,12 +32,16 @@ public class Cliente extends Pessoa {
 		return this.dataDeCadastro;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
-		this.enderecos = enderecos;
-	}
-
 	public List<Dependente> getGrauDeParentesco() {
 		return grauDeParentesco;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }

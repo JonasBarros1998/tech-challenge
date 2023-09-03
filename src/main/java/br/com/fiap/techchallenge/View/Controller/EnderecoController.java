@@ -1,7 +1,11 @@
 package br.com.fiap.techchallenge.View.Controller;
 
 import br.com.fiap.techchallenge.Aplicacao.GerenciarEnderecos;
+import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Endereco;
+import br.com.fiap.techchallenge.Dominio.Entidades.Pessoa;
 import br.com.fiap.techchallenge.View.Controller.DTO.EnderecoDTO;
+import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -70,11 +75,22 @@ public class EnderecoController {
     return ResponseEntity.status(HttpStatus.CREATED).body(enderecoSaida);
   }
 
+  @GetMapping(params = "cpf")
+  public ResponseEntity<List<EnderecoDTO>> pesquisarEnderecoPorNomeDaPessoa(@RequestParam("cpf") String cpf) {
+    var enderecosPorNome = this.gerenciarEnderecos.pesquisarEnderecoPorCpf(cpf);
+    return ResponseEntity.status(HttpStatus.OK).body(enderecosPorNome);
+  }
+
+  @GetMapping(value = "/{enderecoID}/pessoas")
+  public ResponseEntity<List<PessoaDTO>> pesquisarPorUsuariosPorIdDoEndereco(@PathVariable("enderecoID") UUID enderecoID) {
+    var enderecos = this.gerenciarEnderecos.pesquisarEnderecoPorPessoa(enderecoID);
+    return ResponseEntity.status(HttpStatus.OK).body(enderecos);
+  }
+
   @DeleteMapping("/{id}")
   public ResponseEntity remover(@PathVariable UUID id) {
     this.gerenciarEnderecos.remover(id);
     return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
   }
-
 
 }

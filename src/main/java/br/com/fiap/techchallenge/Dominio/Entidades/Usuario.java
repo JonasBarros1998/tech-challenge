@@ -1,5 +1,6 @@
 package br.com.fiap.techchallenge.Dominio.Entidades;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -17,7 +18,11 @@ public class Usuario {
 	private String email;
 
 	@ManyToMany(mappedBy = "usuario", cascade = CascadeType.DETACH)
-	private List<Eletrodomestico> usuario;
+	@JsonManagedReference
+	private List<Eletrodomestico> eletrodomesticos;
+
+	@OneToOne(cascade = CascadeType.DETACH, mappedBy = "usuario")
+	Cliente usuario;
 
 	public Usuario(String email, UUID id) {
 		this.email = email;
@@ -42,8 +47,12 @@ public class Usuario {
 		return email;
 	}
 
-
 	public List<Eletrodomestico> getUsuario() {
+		return this.eletrodomesticos;
+	}
+
+
+	public Cliente getCliente() {
 		return this.usuario;
 	}
 

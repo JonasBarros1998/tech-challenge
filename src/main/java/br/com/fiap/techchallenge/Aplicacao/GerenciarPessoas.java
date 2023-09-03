@@ -1,7 +1,10 @@
 package br.com.fiap.techchallenge.Aplicacao;
 
+import br.com.fiap.techchallenge.Aplicacao.Exceptions.InformacaoNaoEncontrada;
+import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import br.com.fiap.techchallenge.Infra.Repository.DependenteRepository;
 import br.com.fiap.techchallenge.Infra.Repository.PessoaRepository;
+import br.com.fiap.techchallenge.View.Controller.DTO.EditarDadosDaPessoaDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.PessoaDTO;
 import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import br.com.fiap.techchallenge.Dominio.Entidades.Dependente;
@@ -31,6 +34,7 @@ public class GerenciarPessoas {
 		List<Dependente> dependentes = new ArrayList<>();
 
 		var pessoa = PessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
+		pessoa.setUsuario(new Usuario(pessoaDTO.getUsuarioID()));
 		pessoas.add(pessoa);
 
 		pessoaDTO.getRelacionamento().stream()
@@ -52,13 +56,14 @@ public class GerenciarPessoas {
 
 
 	@Transactional
-	public PessoaDTO editarPessoa(PessoaDTO pessoaDTO, String idPessoa) {
-		Cliente cliente = this.pessoaRepository.findById(idPessoa).orElse(null);
+	public PessoaDTO editarPessoa(EditarDadosDaPessoaDTO pessoaDTO, String pessoaCPF) {
+		Cliente cliente = this.pessoaRepository.findById(pessoaCPF)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("Nao foi possivel encontrar o ID da pessoa"));
 
-		cliente.setCpf(pessoaDTO.getCpf());
-		cliente.setNascimento(pessoaDTO.getNascimento());
-		cliente.setNome(pessoaDTO.getNome());
-		cliente.setGenero(pessoaDTO.getGenero());
+		cliente.setCpf(pessoaCPF);
+		cliente.setNascimento(pessoaDTO.nascimento());
+		cliente.setNome(pessoaDTO.nome());
+		cliente.setGenero(pessoaDTO.genero());
 		this.pessoaRepository.save(cliente);
 
 		return PessoaDTO.converterDeClienteParaPessoaDTO(cliente);
@@ -78,8 +83,8 @@ public class GerenciarPessoas {
 		return pessoaDTO;
 	}
 
-	public void remover(String idPessoa) {
-		this.pessoaRepository.deleteById(idPessoa);
+	public void remover(String cpf) {
+		this.pessoaRepository.deleteById(cpf);
 	}
 
 	public List<PessoaDTO> pesquisarPorGenero(String genero) {

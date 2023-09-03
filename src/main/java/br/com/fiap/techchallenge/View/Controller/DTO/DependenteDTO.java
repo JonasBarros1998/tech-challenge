@@ -1,8 +1,11 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public record DependenteDTO(
 
@@ -19,7 +22,11 @@ public record DependenteDTO(
 	LocalDate nascimento,
 
 	@JsonInclude(JsonInclude.Include.NON_NULL)
-	String cpf
+	String cpf,
+
+	@NotNull
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	UUID usuarioID
 ) {
 
 }

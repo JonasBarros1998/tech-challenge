@@ -1,14 +1,17 @@
 package br.com.fiap.techchallenge.Aplicacao;
 
 import br.com.fiap.techchallenge.Aplicacao.Exceptions.InformacaoNaoEncontrada;
+import br.com.fiap.techchallenge.Dominio.CalcularConsumoPorHora;
 import br.com.fiap.techchallenge.Dominio.Entidades.EficienciaEnergetica;
 import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import br.com.fiap.techchallenge.Infra.Repository.EletrodomesticoRepository;
 import br.com.fiap.techchallenge.View.Controller.DTO.AdicionarUsuarioAoEletrodomesticoDTO;
+import br.com.fiap.techchallenge.View.Controller.DTO.ConsumoEnergeticoDTO;
 import br.com.fiap.techchallenge.View.Controller.DTO.EletrodomesticoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
 import java.math.BigDecimal;
@@ -78,6 +81,18 @@ public class GerenciarEletrodomesticos {
 		eletrodomestico.addUsuario(new Usuario(novoUsuario.usuario()));
 		eletrodomesticoRepository.save(eletrodomestico);
 		return EletrodomesticoDTO.converterDeEletrodomesticoParaEletrodomesticoDTO(eletrodomestico);
+	}
+
+
+	public ConsumoEnergeticoDTO calcularConsumoEnergeticoPorAparelho(UUID eletrodomesticoID, ConsumoEnergeticoDTO consumo) {
+		var eletrodomestico = this.eletrodomesticoRepository.findById(eletrodomesticoID)
+			.orElseThrow(() -> new InformacaoNaoEncontrada("Eletrodomestico nao encontrado"));
+
+		var calcularConsumoPorHora = new CalcularConsumoPorHora(consumo.tempoDeUso(), eletrodomestico);
+		var consumoEnergetico = calcularConsumoPorHora.calcular();
+		eletrodomestico.setConsumoTotal(consumoEnergetico);
+		this.eletrodomesticoRepository.save(eletrodomestico);
+		return new ConsumoEnergeticoDTO(consumo.tempoDeUso(), consumoEnergetico);
 	}
 
 	public void removerEletrodomestico(UUID eletrodomesticoID) {

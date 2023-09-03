@@ -1,7 +1,9 @@
 package br.com.fiap.techchallenge.View.Controller.DTO;
 
 import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
+import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -9,10 +11,10 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 public class PessoaDTO {
 
-	@NotEmpty
 	@CPF
 	private String cpf;
 
@@ -27,6 +29,9 @@ public class PessoaDTO {
 	@NotEmpty
 	private String genero;
 
+	@NotNull
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private UUID usuarioID;
 
 	private LocalDate dataDeCadastro;
 
@@ -79,12 +84,15 @@ public class PessoaDTO {
 	}
 
 	public static Cliente converterDeDependenteDTOParaCliente(DependenteDTO dependenteDTO) {
-		return new Cliente(
+		var cliente =  new Cliente(
 			dependenteDTO.nome(),
 			dependenteDTO.nascimento(),
 			dependenteDTO.genero(),
 			dependenteDTO.cpf()
 		);
+
+		cliente.setUsuario(new Usuario(dependenteDTO.usuarioID()));
+		return cliente;
 	}
 
 	public String getCpf() {
@@ -109,5 +117,9 @@ public class PessoaDTO {
 
 	public String getParentesco() {
 		return parentesco;
+	}
+
+	public UUID getUsuarioID() {
+		return usuarioID;
 	}
 }

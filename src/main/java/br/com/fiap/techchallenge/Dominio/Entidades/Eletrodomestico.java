@@ -34,6 +34,9 @@ public class Eletrodomestico {
     @Embedded
     private EficienciaEnergetica eficienciaEnergetica;
 
+    @Column(nullable = true)
+    private BigDecimal consumoTotal = BigDecimal.ZERO;
+
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "eletrodomesticos_usuarios",
       joinColumns = @JoinColumn(name = "eletrodomestico_id"),
@@ -136,5 +139,9 @@ public class Eletrodomestico {
 
     public void addUsuario(Usuario usuario) {
         this.usuario.add(usuario);
+    }
+
+    public void setConsumoTotal(BigDecimal consumoTotal) {
+        this.consumoTotal = consumoTotal;
     }
 }

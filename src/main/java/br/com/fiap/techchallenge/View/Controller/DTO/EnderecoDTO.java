@@ -3,21 +3,39 @@ package br.com.fiap.techchallenge.View.Controller.DTO;
 import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import br.com.fiap.techchallenge.Dominio.Entidades.Endereco;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
 public class EnderecoDTO {
+
 	private UUID id;
+
+	@NotEmpty()
+	@Pattern(regexp = "\\d{5}-\\d{3}", message = "Deve estar no formato 00000-000")
 	private String cep;
+
+	@NotEmpty()
 	private String estado;
+
+	@NotEmpty()
 	private String rua;
+
+	@NotEmpty()
 	private String numero;
+
+	@NotEmpty()
 	private String bairro;
+
+	@NotEmpty()
 	private String cidade;
-	@JsonInclude(value = JsonInclude.Include.NON_NULL)
-	private Cliente cliente;
+
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private UsuarioDTO usuario;
 
 	public EnderecoDTO(UUID id, String cep, String estado, String rua, String numero, String bairro, String cidade) {
 		this.id = id;
@@ -37,7 +55,7 @@ public class EnderecoDTO {
 		this.cidade = endereco.getCidade();
 		this.estado = endereco.getEstado();
 		this.cep = endereco.getCep();
-		this.cliente = endereco.getCliente();
+		this.usuario = UsuarioDTO.converterDeUsuarioParaUsuarioDTO(endereco.getUsuario());
 	}
 
 	public UUID getId() {
@@ -68,21 +86,36 @@ public class EnderecoDTO {
 		return cidade;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
+	public UsuarioDTO getUsuario() {
+		return usuario;
 	}
 
-	public static List<EnderecoDTO> converterDeEnderecoParaEnderecoDTO(List<Endereco> enderecos) {
+	public static List<EnderecoDTO> converterDeEnderecoDTOParaEndereco(List<Endereco> enderecos) {
 		return enderecos.stream()
-			.map(EnderecoDTO::new)
+			.map((endereco) -> {
+				return new EnderecoDTO(
+					endereco.getId(),
+					endereco.getCep(),
+					endereco.getEstado(),
+					endereco.getRua(),
+					endereco.getNumero(),
+					endereco.getBairro(),
+					endereco.getCidade()
+				);
+			})
 			.collect(Collectors.toList());
 	}
+
 
 	public static EnderecoDTO converterDeEnderecoParaEnderecoDTO(Endereco endereco) {
 		return new EnderecoDTO(endereco);
 	}
 
-	public static Endereco converterDeEnderecoParaEnderecoDTO(EnderecoDTO enderecoForm) {
+	public static List<EnderecoDTO> converterDeEnderecoParaEnderecoDTO(List<Endereco> enderecos) {
+		return enderecos.stream().map(EnderecoDTO::new).toList();
+	}
+
+	public static Endereco converterDeEnderecoDTOParaEndereco(EnderecoDTO enderecoForm) {
 		return new Endereco(
 			enderecoForm.getRua(),
 			enderecoForm.getNumero(),
@@ -90,7 +123,7 @@ public class EnderecoDTO {
 			enderecoForm.getCidade(),
 			enderecoForm.getEstado(),
 			enderecoForm.getCep(),
-			enderecoForm.getCliente()
+			UsuarioDTO.converterDeUsuarioDTOParaUsuario(enderecoForm.getUsuario())
 		);
 	}
 
