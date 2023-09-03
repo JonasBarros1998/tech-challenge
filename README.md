@@ -50,8 +50,7 @@ O endpoint tem objetivo de incluir novos usuários na aplicação
 ```http
 POST /api/usuarios
 ```
-#### body
-
+- body
 ```json
 {
   "email": "jonas@outlook.com"
@@ -72,8 +71,7 @@ O endpoint tem como objetivo cadastrar novos endereços em nosso sistema.
 POST /api/enderecos
 ```
 
-### body
-
+- body
 ```json
 {
   "cidade": "São Paulo",
@@ -269,12 +267,12 @@ PUT /api/enderecos/ENDERECO_ID
 
 ```json
 {
-	"cidade": "São Paulo",
-	"estado": "SP",
-	"numero": "61",
-	"bairro": "Bairro 123",
-	"rua": "rua para teste",
-	"cep": "94020-070"
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "numero": "61",
+  "bairro": "Bairro 123",
+  "rua": "rua para teste",
+  "cep": "94020-070"
 }
 ```
 
@@ -297,21 +295,21 @@ POST /api/pessoas
 
 ```json
 {
-	"nome": "Jonas",
-	"cpf": "36979184008",
-	"genero": "Masculino",
-	"nascimento": "1985-06-27",
-	"usuarioID": "5cfb8984-77c3-4800-8144-b75a62353573",
-	"relacionamento": [
-		{
-			"nome": "Jonas 2",
-			"parentesco": "sobrinho",
-			"genero": "Masculino",
-			"nascimento": "2012-01-27",
-			"cpf": "15863220015",
-			"usuarioID": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
-		}
-	]
+  "nome": "Jonas",
+  "cpf": "36979184008",
+  "genero": "Masculino",
+  "nascimento": "1985-06-27",
+  "usuarioID": "5cfb8984-77c3-4800-8144-b75a62353573",
+  "relacionamento": [
+    {
+      "nome": "Jonas 2",
+      "parentesco": "sobrinho",
+      "genero": "Masculino",
+      "nascimento": "2012-01-27",
+      "cpf": "15863220015",
+      "usuarioID": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
+    }
+  ]
 }
 ```
 
@@ -341,18 +339,18 @@ GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
 
 ```json
 [
-	{
-		"cpf": "15863220015",
-		"nome": "Junior",
-		"nascimento": "2012-01-27",
-		"genero": "Masculino",
-		"dataDeCadastro": "2023-09-03",
-		"grauDeParentesco": [
-			{
-				"parentesco": "sobrinho"
-			}
-		]
-	}
+  {
+    "cpf": "15863220015",
+    "nome": "Junior",
+    "nascimento": "2012-01-27",
+    "genero": "Masculino",
+    "dataDeCadastro": "2023-09-03",
+    "grauDeParentesco": [
+      {
+        "parentesco": "sobrinho"
+      }
+    ]
+  }
 ]
 ```
 
@@ -370,12 +368,12 @@ GET /api/pessoas?nome=NOME_DA_PESSOA
 - Ambos os endpoint retornam o mesmo json de acordo com a consulta
 ```json
 [
-	{
-		"cpf": "15863220015",
-		"nome": "Junior",
-		"nascimento": "2012-01-27",
-		"genero": "Feminino"
-	}
+  {
+  "cpf": "15863220015",
+  "nome": "Junior",
+  "nascimento": "2012-01-27",
+  "genero": "Masculino"
+  }
 ]
 ```
 
@@ -389,18 +387,18 @@ GET /api/pessoas/ID_DO_SUPERIOR/parentesco?tipo=TIPO_DE_PARENTESCO
 - Retorno do endpoint
 ``` json
 [
-	{
-		"cpf": "15863220015",
-		"nome": "Junior",
-		"nascimento": "2013-01-27",
-		"genero": "Masculino",
-		"dataDeCadastro": "2023-09-03",
-		"grauDeParentesco": [
-			{
-				"parentesco": "filho"
-			}
-		]
-	}
+  {
+    "cpf": "15863220015",
+    "nome": "Junior",
+    "nascimento": "2013-01-27",
+    "genero": "Masculino",
+    "dataDeCadastro": "2023-09-03",
+    "grauDeParentesco": [
+      {
+        "parentesco": "filho"
+      }
+    ]
+  }
 ]
 ```
 
@@ -414,19 +412,19 @@ PUT /api/pessoas/PESSOA_CPF
 - body
 ```json
 {
-	"nome": "Junior",
-	"nascimento": "2013-01-27",
-	"genero": "Masculino"
+  "nome": "Junior",
+  "nascimento": "2013-01-27",
+  "genero": "Masculino"
 }
 ```
 
 - retorno
 ```json
 {
-	"cpf": "15863220015",
-	"nome": "Junior",
-	"nascimento": "2013-01-27",
-	"genero": "Masculino"
+  "cpf": "15863220015",
+  "nome": "Junior",
+  "nascimento": "2013-01-27",
+  "genero": "Masculino"
 }
 ```
 
@@ -451,28 +449,28 @@ POST /api/eletrodomesticos
 - body
 ```json
 {
-	"nome": "Galedeira",
-	"modelo": "1234",
-	"potencia": 900,
-	"volts": 220,
-	"marca": "Brastemp",
-	"eficienciaEnergetica": {
-		"classificacao": "A",
-		"consumoEnergetico": 200,
-		"porcentagemDeEconomia": 10
-	},
-	"usuarios": [
-		{
-			"id": "c5cba95f-2b97-40e0-8dd6-d782d6b0b3a3"
-		},
-		{
-			"id": "d1bc66e7-105c-4493-a7ca-3b96c56a357a"
-		}
-	]
+  "nome": "Galedeira",
+  "modelo": "1234",
+  "potencia": 900,
+  "volts": 220,
+  "marca": "Brastemp",
+  "eficienciaEnergetica": {
+  "classificacao": "A",
+  "consumoEnergetico": 200,
+  "porcentagemDeEconomia": 10
+},
+  "usuarios": [
+  {
+    "id": "c5cba95f-2b97-40e0-8dd6-d782d6b0b3a3"
+  },
+  {
+    "id": "d1bc66e7-105c-4493-a7ca-3b96c56a357a"
+  }
+ ]
 }
 ```
 
-### Descrição de cada campo
+- Descrição de cada campo
 | campo | descrição |
 | :--- | :--- |
 | nome | `nome` |
@@ -486,164 +484,163 @@ POST /api/eletrodomesticos
 | dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` |
 | usuarios.id | `envie os IDs usuários que utilizam esse aparelho` |
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Gestão de pessoas
-O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
-
-```http
-POST /api/pessoas
-```
-
-Segue abaixo o body que deve ser enviado se a pessoa não tiver dependentes, e o response com dependentes retornando `null`
-### body
+- retorno do endpoint
 ```json
 {
-  "nome": "string",
-  "nascimento": "string (ano-mes-dia)",
-  "genero": "string",
-  "cpf": "string (000.000.000-00 ou 00000000000)"
-}
-```
-
-
-### response
-```json
-{
-  "cpf": "string",
-  "nome": "string",
-  "nascimento": "string",
-  "genero": "string",
-  "dependentes": null,
-  "dataDeCadastro": "string"
-}
-```
-
-Segue abaixo o body que deve ser enviado com todos os dependentes da pessoa, e o response retornando todos os dados dos dependentes
-### body
-```json
-{
-  "nome": "string",
-  "nascimento": "string (ano-mes-dia)",
-  "genero": "string",
-  "cpf": "string (000.000.000-00 ou 00000000000)",
-  "dependentes": [{
-    "nome": "string",
-    "nascimento": "ano-mes-dia",
-    "genero": "string",
-    "cpf": "string (000.000.000-00 ou 00000000000)"
-  }]
-}
-```
-
-### response
-```json
-{
-  "cpf": "string (000.000.000-00 ou 00000000000)",
-  "nome": "string",
-  "nascimento": "string (ano-mes-dia)",
-  "genero": "string",
-  "dependentes": [{
-    "cpf": "string (000.000.000-00 ou 00000000000)",
-    "nome": "string",
-    "nascimento": "string (ano-mes-dia)",
-    "genero": "string"
-  }],
-  "dataDeCadastro": "ano-mes-dia"
-}
-```
-
-### Descrição de cada campo
-| campo | descrição |
-| :--- | :--- |
-| nome | `nome` |
-| data | `formato permitido: ano-mes-dia` |
-| genero | `genero` |
-| cpf | `formato permitido: 000.000.000-00 ou 00000000000 (sem pontos ou traço)` |
-| dependentes | `dependentes de pessoa` |
-| dataDeCadastro | `Data em que a pessoa foi cadastrada em nosso sistema` |
-
-## Eletrodomésticos
-O endpoint tem como objetivo cadastrar os eletrodomésticos dos usuários em nosso sistema
-
-```http
-POST /api/eletrodomesticos
-```
-
-### body
-```json
-{
-  "nome": "string",
-  "modelo": "string",
-  "potencia": "number",
-  "volts": "number",
-  "marca": "string",
+  "nome": "Galadeira",
+  "modelo": "1234",
+  "potencia": 900,
+  "volts": 220,
+  "marca": "Brastemp",
   "eficienciaEnergetica": {
-    "classificacao": "string",
-    "consumoEnergetico": "number",
-    "porcentagemDeEconomia": "number"
+  "consumoEnergetico": 200,
+  "classificacao": "A"
+},
+  "usuarios": [
+    {
+      "id": "5cfb8984-77c3-4800-8144-b75a62353573"
+    },
+    {
+      "id": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
+    }
+  ],
+  "dataDeCadastro": "2023-09-03"
+}
+```
+
+#### Adicionar novos usuário aos eletrodomesticos
+
+```http
+GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
+```
+
+- body
+```json
+{
+  "usuario": "USUARIO_ID"
+}
+```
+
+#### Editar eletrodomesticos
+- É possível editar qualquer informação sobre o eletrodomestico
+
+- body
+```json
+{
+  "nome": "Geladeira",
+  "modelo": "1234 abcd",
+  "potencia": 900,
+  "volts": 110,
+  "marca": "Brastemp",
+  "eficienciaEnergetica": {
+    "classificacao": "A",
+    "consumoEnergetico": 50,
+    "porcentagemDeEconomia": 10
   }
 }
 ```
 
-### response
+- retorno do endpoint
 ```json
 {
-  "nome": "string",
-  "modelo": "string",
-  "potencia": "number",
-  "volts": "number",
-  "marca": "string",
+  "nome": "Celular",
+  "modelo": "Xiaomi 123",
+  "potencia": 900,
+  "volts": 110,
+  "marca": "Xiaomi",
   "eficienciaEnergetica": {
-    "consumoEnergetico": "number",
-    "classificacao": "string",
-    "porcentagemDeEconomia": "number"
+    "consumoEnergetico": 50,
+    "classificacao": "A",
+    "porcentagemDeEconomia": 10
   },
-  "dataDeCadastro": "string"
+  "dataDeCadastro": "2023-09-03"
 }
 ```
 
-### Descrição de cada campo
+#### Calcular o consumo de energia eletrica com base no tempo de uso
+- Utilizado para cumprir o item 9 da API de eletrodomestico do tech challange, onde diz o seguinte: "A API de gestão de eletrodomésticos deve ser capaz de identificar os consumos de energia dos aparelhos eletrônicos cadastrados, com base no tempo de uso reportado pelo adaptador".
+
+```http
+PUT /api/eletrodomesticos/df3066d0-2fda-4136-aa5b-f815717e23b3/consumo
+```
+
+- body
+```json
+{
+  "tempoDeUso": "01:30:00"
+}
+```
+
+- retorno do endpoint
+```json
+{
+  "tempoDeUso": "01:30:00",
+  "consumoEnergeticoPorHora": 75.000
+}
+```
+
+#### Pesquisar por nome, potência e modelo
+- As urls abaixo, tem intuito de pesquisar por nome, potência e modelo. O retorno da API é o mesmo para todos os endpoint, mudando apenas o tipo da pesquisa
+  
+```http
+GET /api/eletrodomesticos?nome=NOME_DO_APARELHO
+```
+```http
+GET /api/eletrodomesticos/potencia?de=MINIMO_DA_POTENCIA&ate=MAXIMO_DA_POTENCIA
+```
+```http
+GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
+```
+
+- descrição dos endpoint
 | campo | descrição |
 | :--- | :--- |
-| nome | `nome` |
-| modelo | `modelo` |
-| potencia | `potência em watts do aparelho, por exemplo: 1800, 300, 600` |
-| volts | `voltagem utilizada para ligar o aparelho, por exemplo: 220, 110, 127 etc...` |
-| marca | `marca` |
-| classificacao | `A letra que está relacionada ao aparelho na tabela de de eficiência energetica do Inmetro, só será permitido uma das seguintes classificações: A, B, C, D, E, F ou G` |
-| consumoEnergetico | `consumo energético (KWh/mês) que está inserido na tabela de eficiência energetica do Inmetro` |
-| porcentagemDeEconomia | `Campo opcional. Porcentagem de economia do aparelho, por exemplo 10, 20, 30. Esse campo é utilizado para os modelos fabricados antes de 2021`
-| dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` | 
+| `de` | minimo de potencia que gostaria de filtrar | 
 
-## Exemplo de requisições das APIs
+| `ate` | maximo de potencia que gostaria de filtrar |
 
-[documentação](https://documenter.getpostman.com/view/23405037/2s93zCXztZ)
+- body
+```json
+[
+  {
+    "nome": "frigobar",
+    "modelo": "1234",
+    "potencia": 900.00,
+    "volts": 220.00,
+    "marca": "Brastemp",
+    "eficienciaEnergetica": {
+    "consumoEnergetico": 200.00,
+    "classificacao": "A"
+    },
+    "dataDeCadastro": "2023-09-03"
+  }
+]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
