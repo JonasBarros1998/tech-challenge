@@ -103,6 +103,7 @@ POST /api/enderecos
 ```
 
 ### Descrição de cada campo
+
 | campo | descrição |
 | :--- | :--- |
 | id | `id do endereco no formato UUID` |
@@ -593,6 +594,7 @@ GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
 ```
 
 - descrição dos endpoint
+  
 | campo | descrição |
 | :--- | :--- |
 | `de` | minimo de potencia que gostaria de filtrar | 
