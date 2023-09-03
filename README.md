@@ -1,9 +1,69 @@
-# Tech challenge
+# Tech challenge Fase 2
+
+## Como iniciar a aplicaçao
+
+#### pré-requisitos
+- Java 17
+- Docker (Para executar o banco de dados)
+
+#### Clone o repositório
+- clone o repositório `git clone git@github.com:JonasBarros1998/tech-challenge.git`
+- mude para branch `git checkout techchallange-fase-2`. (**a branch `main` está com o conteúdo da fase 1 do techchallange**)
+
+#### baixe as dependencias do projeto
+```
+mvn install
+```
+
+#### Criação do container docker
+- Na aplicação existe um arquivo chamado `Dockerfile` no qual está configurado para criação da imagem do banco de dados. Portanto digite o comando abaixo para criar a imagem. **Verifique se esteja dentro da pasta raiz da aplicação antes de executar o comando abaixo**
+```
+docker build -t jonasbarros/techchallange -f database.dockerfile .
+```
+
+- Após a imagem ser criada, crie um container com o nosso banco de dados postgreSQL. 
+```
+docker run --name techchallange -p 5432:5432 jonasbarros/techchallange
+```
+
+- Teste a conexão com o container no **DBeaver** ou no próprio **intellij**, para isso segue as credencias de acesso e o nome da database que já foram configuradas durante a inicialização do container. Versão do banco de dados e as variaveis de ambiente utilizadas são encontradas no arquivo `database.dockerfile`
+```
+senha: abc1234
+usuario: jonas
+database: techchallange
+```
+
+#### Inicie a aplicação
+- servidor de acesso local `http://localhost:8080`
+```
+mvn spring-boot:run
+```
+- Ao iniciar a aplicação, ela irá criará automaticamente as tabelas e os relacionamentos. Mais informações no arquivo
+
+`tech-challenge/src/main/resources/application.yml`
 
 ## Documentação das APIs
 
-### Servidor local
-`http://localhost:8080`
+### Usuarios
+O endpoint tem objetivo de incluir novos usuários na aplicação
+
+```http
+POST /api/usuarios
+```
+#### body
+
+```json
+{
+  "email": "jonas@outlook.com"
+}
+```
+
+#### Descrição dos campos
+| campo | descrição |
+| :--- | :--- |
+| email | `email do usuario` |
+
+
 
 ### Endereços
 O endpoint tem como objetivo cadastrar novos endereços em nosso sistema. 
@@ -16,12 +76,15 @@ POST /api/enderecos
 
 ```json
 {
-  "cidade": "string",
-  "estado": "string",
-  "numero": "string",
-  "bairro": "string",
-  "rua": "string",
-  "cep": "string"
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "numero": "100",
+  "bairro": "Bairro de teste",
+  "rua": "Rua ABCD",
+  "cep": "94020-080",
+  "usuario": {
+    "id": "ID_USUARIO"
+  }
 }
 ```
 
@@ -29,24 +92,224 @@ POST /api/enderecos
 
 ```json
 {
-  "cidade": "string",
-  "estado": "string",
-  "numero": "string",
-  "bairro": "string",
-  "rua": "string",
-  "cep": "string"
+  "cidade": "São Paulo",
+  "estado": "SP",
+  "numero": "100",
+  "bairro": "Bairro de teste",
+  "rua": "Rua ABCD",
+  "cep": "94020-080",
+  "usuario": {
+    "id": "ID_USUARIO"
+  }
 }
 ```
 
 ### Descrição de cada campo
 | campo | descrição |
 | :--- | :--- |
+| id | `id do endereco no formato UUID` |
 | cidade | `nome da cidade` |
 | estado | `nome do estado` |
 | numero | `número da residência` |
 | bairro | `nome do bairro` |
 | rua | `nome da rua` |
 | cep | `formato permitido: 00000-000` |
+| usuario.id | `Após a inserção do usuário, insira o ID dele nesse campo` como cadastrar [usuários](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) | 
+
+#### Pesquisar todos os endereços
+
+```http
+GET /api/enderecos
+```
+Retorna uma lista de endereços que foram incluídos na aplicação
+
+```json
+[
+  {
+    "id": "79cf6814-4474-437c-94fa-b4951a9d6954",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo"
+  },
+  {
+    "id": "2e52185d-2406-4370-881d-b6aa10e0168a",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo"
+  }
+]
+```
+
+#### Pesquisar endereço por ID
+
+```http
+GET /api/enderecos/ENDERECO_ID
+```
+
+```json
+[
+  {
+    "id": "79cf6814-4474-437c-94fa-b4951a9d6954",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo"
+  },
+]
+```
+
+#### Pesquisar endereço por bairro, rua, cidade ou estado.
+
+O retorno dessas rota serão exatamente iguais, mudando apenas os `query parameters`
+
+```http
+GET /api/enderecos?bairro=NOME_DO_BAIRRO
+```
+```http
+GET /api/enderecos?rua=NOME_DA_RUA
+```
+```http
+GET /api/enderecos?cidade=NOME_DA_CIDADE
+```
+```http
+GET /api/enderecos?estado=NOME_DO_ESTADO
+```
+
+#### Examplo de retorno das rotas acima
+```json
+[
+  {
+    "id": "79cf6814-4474-437c-94fa-b4951a9d6954",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo"
+  },
+]
+```
+
+#### Pesquisar endereço por CPF da pessoa
+- endpoint para cumprir os item 9 do tech challange, onde diz o seguinte: "Essa API deve ser capaz de identificar as pessoas associadas a cada endereço e vice-versa" 
+- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações em [cadastrar clientes]()
+- A API irá retornar uma lista incluindo o usuário relacionado aquele endereço, consultando a partir do CPF da pessoa
+  
+```http
+GET /api/enderecos?cpf=CPF_DO_CLIENTE
+```
+
+##### retorno da API 
+
+```json
+[
+  {
+    "id": "79cf6814-4474-437c-94fa-b4951a9d6954",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo",
+    "usuario": {
+      "email": "jonas@outlook.com",
+      "id": "5cfb8984-77c3-4800-8144-b75a62353573"
+    }
+  },
+  {
+    "id": "2e52185d-2406-4370-881d-b6aa10e0168a",
+    "cep": "94020-080",
+    "estado": "SP",
+    "rua": "Rua ABCD",
+    "numero": "100",
+    "bairro": "Bairro de teste",
+    "cidade": "São Paulo",
+    "usuario": {
+      "email": "jonas@outlook.com",
+      "id": "5cfb8984-77c3-4800-8144-b75a62353573"
+    }
+  }
+]
+```
+
+#### Pesquisar a pessoa a partir do ID do seu endereço
+- endpoint para cumprir os item 9 de Enderecos do tech challange, onde diz o seguinte: "Essa API deve ser capaz de identificar as pessoas associadas a cada endereço e vice-versa" 
+- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações em [cadastrar clientes]()
+- A API irá retornar uma lista com o nome das pessoas relacionada ao endereço consultado
+
+```http
+GET /api/enderecos/ENDERECO_ID/pessoas
+```
+
+```json
+[
+  {
+    "cpf": "36979184008",
+    "nome": "Jonas",
+    "nascimento": "2023-09-03",
+    "genero": "Masculino"
+  }
+]
+```
+
+#### Editar endereço
+- Edita apenas o endereço, utilizando o ID do endereço, mais informação sobre a descriação de cada campo: [descrição](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#tech-challenge-fase-2)
+
+```http
+PUT /api/enderecos/ENDERECO_ID
+```
+
+```json
+{
+	"cidade": "São Paulo",
+	"estado": "SP",
+	"numero": "61",
+	"bairro": "Bairro 123",
+	"rua": "rua para teste",
+	"cep": "94020-070"
+}
+```
+
+#### Remover endereço
+- É retornado uma resposta vazia, com status HTTP 204
+
+```http
+DELETE /api/enderecos/ENDERECO_ID
+```
+
+
+## Pessoas
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Gestão de pessoas
 O endpoint tem como objetivo fazer o cadastro dos usuários em nosso sistema
