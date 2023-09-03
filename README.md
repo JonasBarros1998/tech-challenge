@@ -81,7 +81,7 @@ O endpoint tem como objetivo cadastrar novos endereços em nosso sistema.
 POST /api/enderecos
 ```
 
-- body
+- body da requisição
 ```json
 {
   "cidade": "São Paulo",
@@ -193,7 +193,7 @@ GET /api/enderecos?cidade=NOME_DA_CIDADE
 GET /api/enderecos?estado=NOME_DO_ESTADO
 ```
 
-#### resposta dos endpoints
+- resposta dos endpoints
 ```json
 [
   {
@@ -369,13 +369,13 @@ POST /api/pessoas
 
 #### Pesquisar por dependentes
 - A partir do ID de um superior, ou seja, a pessoa que esteja na raiz da árvore, é possível consultar todos os seus dependentes
+- Ao pesquisar deve retornar um json, listando todos os seus dependentes
 
 ```http
 GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
 ```
 
-- Ao pesquisar deve retornar um json no formato abaixo, listando todos os seus dependentes
-
+- resposta do endpoint
 ```json
 [
   {
@@ -394,8 +394,8 @@ GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
 ```
 
 #### Pesquisar por nome e por genero
-
 - Nessa pesquisa é possível consultar todas as pessoas por nome ou genero
+- Ambos os endpoints retornam o mesmo json de acordo com a consulta
   
 ```http
 GET /api/pessoas?genero=TIPO_DO_GENERO
@@ -404,7 +404,7 @@ GET /api/pessoas?genero=TIPO_DO_GENERO
 GET /api/pessoas?nome=NOME_DA_PESSOA
 ```
 
-- Ambos os endpoint retornam o mesmo json de acordo com a consulta
+- resposta do endpoint
 ```json
 [
   {
@@ -448,7 +448,7 @@ GET /api/pessoas/ID_DO_SUPERIOR/parentesco?tipo=TIPO_DE_PARENTESCO
 PUT /api/pessoas/PESSOA_CPF
 ```
   
-- body
+- body da requisição
 ```json
 {
   "nome": "Junior",
@@ -485,7 +485,7 @@ PUT /api/pessoas/PESSOA_CPF
 POST /api/eletrodomesticos
 ```
 
-- body
+- body da requisição
 ```json
 {
   "nome": "Galedeira",
@@ -554,7 +554,7 @@ POST /api/eletrodomesticos
 GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 ```
 
-- body
+- body da requisição
 ```json
 {
   "usuario": "USUARIO_ID"
@@ -564,7 +564,7 @@ GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 #### Editar eletrodomesticos
 - É possível editar qualquer informação sobre o eletrodomestico
 
-- body
+- body da requisição
 ```json
 {
   "nome": "Geladeira",
@@ -604,7 +604,7 @@ GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 PUT /api/eletrodomesticos/df3066d0-2fda-4136-aa5b-f815717e23b3/consumo
 ```
 
-- body
+- body da requisição
 ```json
 {
   "tempoDeUso": "01:30:00"
@@ -639,7 +639,7 @@ GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
 | `de` | minimo de potencia que gostaria de filtrar | 
 | `ate` | maximo de potencia que gostaria de filtrar |
 
-- body
+- body da requisição
 ```json
 [
   {
