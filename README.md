@@ -16,7 +16,7 @@ mvn install
 ```
 
 #### Criação do container docker
-- Na aplicação existe um arquivo chamado `Dockerfile` no qual está configurado para criação da imagem do banco de dados. Portanto digite o comando abaixo para criar a imagem. **Verifique se esteja dentro da pasta raiz da aplicação antes de executar o comando abaixo**
+- Na aplicação existe um arquivo chamado `database.dockerfile` no qual está configurado para criação da imagem do banco de dados. Portanto digite o comando abaixo para criar a imagem. **Verifique se esteja dentro da pasta raiz da aplicação antes de executar o comando**
 ```
 docker build -t jonasbarros/techchallange -f database.dockerfile .
 ```
@@ -38,8 +38,7 @@ database: techchallange
 ```
 mvn spring-boot:run
 ```
-- Ao iniciar a aplicação, ela irá criará automaticamente as tabelas e os relacionamentos. Mais informações no arquivo
-
+- Ao iniciar a aplicação, ela criará automaticamente as tabelas e os relacionamentos do banco de dados. Mais informações no arquivo
 `tech-challenge/src/main/resources/application.yml`
 
 ## Documentação das APIs
@@ -107,7 +106,7 @@ POST /api/enderecos
   "rua": "Rua ABCD",
   "cep": "94020-080",
   "usuario": {
-    "id": "ID_USUARIO"
+    "id": "f64fbc78-cf68-48cb-82fa-aae6ed3d2427"
   }
 }
 ```
@@ -123,10 +122,10 @@ POST /api/enderecos
 | bairro | `nome do bairro` |
 | rua | `nome da rua` |
 | cep | `formato permitido: 00000-000` |
-| usuario.id | `Após a inserção do usuário, insira o ID dele nesse campo` como cadastrar [usuários](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#baixe-as-dependencias-do-projeto) | 
+| usuario.id | `Após a inserção do usuário, insira o ID dele nesse campo` como cadastrar [usuários](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#usuarios) | 
 
 #### Pesquisar todos os endereços
-- Ao pesquisar por enderedo, o retorno é uma lista de endereços que foram incluídos na aplicação
+- Ao pesquisar todos os enderedo, o retorno é uma lista de endereços que foram incluídos na aplicação
 
 ```http
 GET /api/enderecos
@@ -173,7 +172,7 @@ GET /api/enderecos/ENDERECO_ID
     "numero": "100",
     "bairro": "Bairro de teste",
     "cidade": "São Paulo"
-  },
+  }
 ]
 ```
 
@@ -204,7 +203,7 @@ GET /api/enderecos?estado=NOME_DO_ESTADO
     "numero": "100",
     "bairro": "Bairro de teste",
     "cidade": "São Paulo"
-  },
+  }
 ]
 ```
 
