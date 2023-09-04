@@ -15,7 +15,7 @@ public class Cliente extends Pessoa {
 	@Column(insertable = true)
 	private final LocalDate dataDeCadastro = LocalDate.now();
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pessoaId2")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "dependente")
 	List<Dependente> grauDeParentesco;
 
 	@OneToOne(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)

@@ -3,11 +3,7 @@ package br.com.fiap.techchallenge.View.Controller.DTO;
 import br.com.fiap.techchallenge.Dominio.Entidades.Cliente;
 import br.com.fiap.techchallenge.Dominio.Entidades.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import org.hibernate.validator.constraints.br.CPF;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +11,7 @@ import java.util.UUID;
 
 public class PessoaDTO {
 
-	@CPF
+	@Size(min = 11, max=11, message = "O cpf deve ter 11 digitos. Envie apenas os numeros sem formatação")
 	private String cpf;
 
 	@NotEmpty

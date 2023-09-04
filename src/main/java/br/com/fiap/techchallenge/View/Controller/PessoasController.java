@@ -39,15 +39,6 @@ public class PessoasController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoa);
     }
 
-    @PutMapping("/dependente/{idDependente}/superior")
-    public ResponseEntity<PessoaDTO> alterarDependenteDeSuperior(
-      @PathVariable UUID idDependente,
-      @RequestBody @Valid PessoaDTO pessoaDTO
-    ) {
-        PessoaDTO pessoa = this.gerenciarPessoas.alterarRelacionamento(idDependente, pessoaDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(pessoa);
-    }
-
     @GetMapping("/{cpf}/dependentes")
     public ResponseEntity<List<Cliente>> pesquisarPorDependentes(@PathVariable String cpf) {
         var pessoas = this.gerenciarPessoas.pesquisarPorDependentes(cpf);

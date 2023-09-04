@@ -37,12 +37,14 @@ public class GerenciarPessoas {
 		pessoa.setUsuario(new Usuario(pessoaDTO.getUsuarioID()));
 		pessoas.add(pessoa);
 
-		pessoaDTO.getRelacionamento().stream()
-			.forEach((item) -> {
-				var dependente = PessoaDTO.converterDeDependenteDTOParaCliente(item);
-				pessoas.add(dependente);
-				dependentes.add(new Dependente(item.parentesco(), pessoa, dependente));
-			});
+		if(pessoaDTO.getRelacionamento() != null) {
+			pessoaDTO.getRelacionamento().stream()
+				.forEach((item) -> {
+					var dependente = PessoaDTO.converterDeDependenteDTOParaCliente(item);
+					pessoas.add(dependente);
+					dependentes.add(new Dependente(item.parentesco(), pessoa, dependente));
+				});
+		}
 
 		this.pessoaRepository.saveAll(pessoas);
 		this.dependenteRepository.saveAll(dependentes);
@@ -67,20 +69,6 @@ public class GerenciarPessoas {
 		this.pessoaRepository.save(cliente);
 
 		return PessoaDTO.converterDeClienteParaPessoaDTO(cliente);
-	}
-
-
-	@Transactional
-	public PessoaDTO alterarRelacionamento(UUID idDependente, PessoaDTO pessoaDTO) {
-
-		Cliente superior = PessoaDTO.converterDePessoaDTOParaCliente(pessoaDTO);
-
-		Dependente dependente = this.dependenteRepository.pesquisarDependente(idDependente);
-		dependente.setPessoaId1(superior);
-		pessoaDTO.getRelacionamento().stream().forEach((value) -> dependente.setParentesco(value.parentesco()));
-		this.dependenteRepository.save(dependente);
-
-		return pessoaDTO;
 	}
 
 	public void remover(String cpf) {

@@ -13,34 +13,34 @@ public class Dependente{
 	UUID id;
 
 	@ManyToOne
-	@JoinColumn(name = "pessoa_id_1")
-	Cliente pessoaId1;
+	@JoinColumn(name = "superior")
+	Cliente superior;
 
 	@ManyToOne
-	@JoinColumn(name = "pessoa_id_2")
-	Cliente pessoaId2;
+	@JoinColumn(name = "dependente")
+	Cliente dependente;
 
 	@Column(nullable = false, length = 50, name = "parentesco")
 	String parentesco;
 
 	public Dependente() {}
 
-	public Dependente(String parentesco, Cliente pessoaId1, Cliente pessoaId2) {
+	public Dependente(String parentesco, Cliente superior, Cliente dependente) {
 		this.parentesco = parentesco;
-		this.pessoaId2 = pessoaId2;
-		this.pessoaId1 = pessoaId1;
+		this.dependente = dependente;
+		this.superior = superior;
 	}
 
 	public String getParentesco() {
 		return parentesco;
 	}
 
-	public void setPessoaId1(Cliente pessoaId1) {
-		this.pessoaId1 = pessoaId1;
+	public void setPessoaId1(Cliente superior) {
+		this.superior = superior;
 	}
 
-	public void setPessoaId2(Cliente pessoaId2) {
-		this.pessoaId2 = pessoaId2;
+	public void setPessoaId2(Cliente dependente) {
+		this.dependente = dependente;
 	}
 
 	public void setParentesco(String parentesco) {

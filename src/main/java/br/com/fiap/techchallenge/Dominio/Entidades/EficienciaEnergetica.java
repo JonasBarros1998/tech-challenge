@@ -18,7 +18,7 @@ public class EficienciaEnergetica {
 	@Column(columnDefinition = "varchar(1)")
 	EficienciaEnergeticaClassificacao classificacao;
 
-	@Column(nullable = false)
+	@Column()
 	BigDecimal porcentagemDeEconomia;
 
 	public EficienciaEnergetica() {}

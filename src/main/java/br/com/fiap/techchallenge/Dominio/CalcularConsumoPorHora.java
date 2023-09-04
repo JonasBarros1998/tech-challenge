@@ -23,7 +23,7 @@ public class CalcularConsumoPorHora {
 			.getConsumoEnergetico()
 			.multiply(horas)
 			.divide(BigDecimal.valueOf(1000))
-			.multiply(BigDecimal.valueOf(1000)); //Arredondar o valor do KWh
+			.multiply(BigDecimal.valueOf(1000)).stripTrailingZeros(); //Arredondar o valor do KWh
 	}
 
 	private BigDecimal converterHorasParaDecimal(LocalTime tempo) {
