@@ -1,48 +1,38 @@
-## Ferramentas e tecnologias utilizadas
-Java versão 17: Por ser LTS (Long Term Support) tenho um tempo maior de suporte e consigo utilizar os recursos mais recentes do spring framework. Com a versão 17 também posso utilizar alguns recursos interessantes que podem ser úteis na continuidade do curso, como por exemplo Sealed Classes.
+# Relatório técnico 
 
-Spring versão 3.1.0: Versão mais recente do spring que tiveram algumas atualizações interessantes, como por exemplo auto-configuration do Spring Autorization Server, e também já é possível a utilização do spring data 2023.0
+## Image geral do relacionamento entre as tabelas
 
-Maven versão 3.8.6: Como gerenciador de dependências
+![diagrama de relacionamento](https://firebasestorage.googleapis.com/v0/b/app-english-class.appspot.com/o/Diagrama_de_relacionamento.png?alt=media&token=6cd8cbe2-eb4c-4b7d-bc2e-355550ebb8ec)
 
-spring-boot-starter-web: Essa dependência nos traz inúmeras facilidades, como por exemplo trabalhar com aplicações RestFull.
+## Descrição de cada tabela
 
-spring-boot-devtools: Atualizações liveReload durante o desenvolvimento do projeto
+- **Usuario e Pessoas** (um para um). Cada pessoa deverá ter um usuário associado
+- **Usuario e Endereco** (um para muitos) Um usuario pode ter muitos endereços, mas um endereço só pode ter um usuário relacionado
+- **Usuario e Eletrodomesticos e Eletrodomesticos_Usuarios** (tabela de join) (muitos para muitos). Muitos usuários podem utilizar o mesmo eletrodomesticos e os eletrodomesticos podem ser utilizados por muitos usuários
+- **Pessoa e Relacionamento** (Um para muitos). Uma pessoa pode ter muitos relacionamentos/dependentes familiares
 
+## Desafios encontrados durante o desenvolvimento
 
-## Desafios encontrados durante o desenvolvimento e as soluções desenvolvidas
+### Relacionamento entre Pessoa e Dependentes
+Antes de iniciar o desenvolvimento, testei 3 formas de fazer o relacionamento entre pessoa e dependente
+1. Árvore hierárquica: Útil para diversos casos como por exemplo, estruturas de pasta, empresa e departamento, porém para casos com relacionamento familiar obtive alguns problemas para saber o topo da árvore hierárquica e também com o passar do tempo a consulta começa a ficar muito complexa e dificultando a manutenção do código e resoluções de erros
+2. Relacionamento de muitos para muitos com tabela de join: Também útil para diversos casos, mas não para relacionameto familiar. Quando utilizei esse relacionamento, tive que criar uma tabela para dependente, duplicando assim os dados entre Pessoa e Dependente para que posteriormente adicionar suas chaves primarias na tabela de join. Porém nesse caso ficaria complexo eu passar um dependente para o todo da árvore e também estaria deixando duas tabelas com praticamente os mesmos dados entre Pessoa e Dependente, que no caso de relacionamento familiar onde dependente também é uma pessoa não seria muito interessante.
+3. Nesse terceiro teste foi a melhor forma para criar relacionamentos familiares e também é a forma que estou utilizando no código. Tive que criar uma tabela Pessoa onde ficariam armazenadas todas as pessoas, independentemente se ela está no topo da árvore ou se ela é um dependente, afinal em nosso cenário um dependente também é uma pessoa. Criei também uma tabela chamada relacionamento, onde a uma coluna chamada de superior que irá armazenar o CPF da pessoa no qual é a superior daquela que está na coluna dependente. Também existe uma terceira coluna chamada parentesco, onde estão armazenados o tipo de parentesco do dependente em relação ao seu superior.
 
-#### Inclusão do campo de `dataDeCadastro` para a API de pessoas
-Incluí esse campo porque será importante para uma equipe de marketing que pode desejar fazer campanhas para os clientes que estão utilizando os nossos serviços há 1 ano. 
-Ou também será útil para entendermos quanto tempo cada cliente passa utilizando os nossos serviços.
+### record vs classes
+Durante o desenvolvimento, iniciei utilizando apenas o **record** para construir as minhas DTOs. Mas conforme fui avançando precisei substituir de **record** para **class** porque precisei utilizar outros construtores dentro classe da mesma classe, sem ter que ficar fazendo if e else ou ficar enviando null ao construtor do record. 
 
-#### Entendimento das informações relacionadas aos eletrodomésticos que os usuários precisariam para analisar o quanto de energia cada aparelho consumirá.
+### Estrutura do projeto
+Criei um projeto utilizando uma estrutura semelhante ao DDD conforme aprendido na fase 2, mas modifiquei alguns pontos para melhor se adaptar ao meu cenário de uso.
 
-Os requisitos mínimos para completar o endpoint de eletrodomésticos, deveria conter os seguintes campos: `nome`, `modelo` e `potencia`, porém como 
-teríamos a liberdade de adicionar outras informações a nossa classe, adicionei mais 4 campos que na minha opinião são relevantes para um melhor entendimento
-de quanto cada aparelho consome de energia elétrica.
+1. Pacote de `Aplicacao`: Onde estão a junção entre o meu domínio e da minha infraestrutura e regras de negócio
+2. Pacote de `Domain`: Onde estão as minhas entidades e as minhas regras de negócio. Adicionei como regra de negócio o cálculo do consumo de energia por hora de uso.
+3. Pacote `Infra`: Onde fica a comunicação entre o banco e a minha aplicação.
+4. Pacote `View`: Onde enviamos ou recebemos as informações dos usuários externos ou de sistema externos, nesse pacote também estão as DTOs
+5. Pacote `util`: Onde estão as classes que identificam algum erro e formata de uma forma inteligível ao utilizados 
 
-Segue abaixo cada campo extra e a descrição do motivo pelo no qual adicionei
-
-  1° `volts`: Cada região utiliza uma voltagem diferente para ligar seus eletrodomésticos, ela pode ser 110 ou 220 volts, portanto adicionar essa voltagem em nosso sistema pode ser importante
-  para uma análise futura do consumo energético.
-  
-  2° `marca`: Dependendo da marca e da qualidade e da qualidade das peças que compõem os eletrodomésticos, ele pode consumir muita ou pouca energia elétrica, então quando o usuário for trocar de aparelho por qualquer
- motivo, ele pode optar por escolher outra marca ou permanecer com a mesma, porque ele já tem todo um histórico de consumo dos aparelhos relacionados aquela marca. 
-  
-  3° `eficienciaEnergetica`: Todos os eletrodomésticos que compramos vem com uma tabela de eficiência energética do Inmetro, então o usuário poderá comparar a eficiência energética que está indicando na etiqueta com o que está sendo calculada pelo sistema.
-  Para fazer a modelagem da classe `EficienciaEnergetica`, precisei adicionar o tipo `Enum` para o campo `classificacao`. Adicionei esse tipo porque as letras da tabela de eficiência energetica são fixas e raramente sofrem com alterações (última alteração foi realizada no ano de 2021), e também vai trazer clareza aos desenvolvedores que tiverem fazendo alterações no modelo de `Eletrodomesticos` ou consumindo a API.
-  O campo `porcentagemDeEconomia` é utilizado para aqueles aparelhos fabricados antes de 2021, no qual a tabela de eficiência energética era de um formato diferente do atual. 
-  Para conseguir extrair essas informações e modelar a minha classe, tive que consultar a documentação oficial disponibilizada no [programa brasileiro de etiquetagem](https://www.gov.br/inmetro/pt-br/assuntos/avaliacao-da-conformidade/programa-brasileiro-de-etiquetagem). 
-
-  
-  4° `dataDeCadastro`: Com o passar do tempo as peças vão se deteriorando e podem consumiar mais energia. Então o usuário poderá verificar o aumento ou não do consumo de energia do aparelho com o passar dos anos.
-
-#### Capturar execptions com o `RestControllerAdvice` do spring
-
-Para capturar as exceptions e retornar o status code e a mensagem correta caso o consumidor da api enviasse um campo faltante ou com um tipo incorreto, eu poderia fazer essa verificação no próprio controller mas optei por criar duas classes `ErroForm` e `ValidacaoHandler` para capturar cada exception e retornar a mensagem e o status code corretos ao consumidor. 
-Dentro da classe `ValidacaoHandler` adicionei os métodos com as Exceptions que gostaria de capturar e as mensagens personalizadas, para que o consumidor consiga entender o motivo que ocasionou aquele erro.
+## Ferramentas utilizadas
+- Docker para subir o banco de dados postgresql
 
 
-#### Validação de CPF
-Para validar o CPF optei por utilizar as anotações do hibernate ao invés de criar uma classe personalizada com as regras necessárias para validação do CPF.
+
