@@ -209,7 +209,7 @@ GET /api/enderecos?estado=NOME_DO_ESTADO
 
 #### Pesquisar endereço por CPF da pessoa
 - endpoint para cumprir os item 9 do tech challange, onde diz o seguinte: "Essa API deve ser capaz de identificar as pessoas associadas a cada endereço e vice-versa" 
-- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações em [cadastrar clientes]()
+- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações, consulte o tópico [cadastrar clientes](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#cadastrar-uma-pessoa-e-seus-dependentes)
 - A API irá retornar uma lista incluindo o usuário relacionado aquele endereço, consultando a partir do CPF da pessoa
   
 ```http
@@ -250,8 +250,9 @@ GET /api/enderecos?cpf=CPF_DO_CLIENTE
 
 #### Pesquisar a pessoa a partir do ID do seu endereço
 - endpoint para cumprir os item 9 de Enderecos do tech challange, onde diz o seguinte: "Essa API deve ser capaz de identificar as pessoas associadas a cada endereço e vice-versa" 
-- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações em [cadastrar clientes]()
+- Antes de executar essa URL, verifique se já cadastrou os clientes e relacionou o usuário ao cliente cadastrado, mais informações consulte o tópico [cadastrar clientes](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#cadastrar-uma-pessoa-e-seus-dependentes)
 - A API irá retornar uma lista com o nome das pessoas relacionada ao endereço consultado
+- Aqui é possível pesquisar a pessoa utilizando o ID do endereço
 
 ```http
 GET /api/enderecos/ENDERECO_ID/pessoas
@@ -270,7 +271,7 @@ GET /api/enderecos/ENDERECO_ID/pessoas
 ```
 
 #### Editar endereço
-- Edita apenas o endereço, utilizando o ID do endereço, mais informação sobre a descriação de cada campo: [descrição](https://github.com/JonasBarros1998/tech-challenge/edit/techchallange-fase-2/README.md#tech-challenge-fase-2)
+- Edita apenas o endereço, utilizando o ID do endereço, mais informação sobre a descriação de cada campo: [descrição](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#endere%C3%A7os)
 
 ```http
 PUT /api/enderecos/ENDERECO_ID
@@ -313,7 +314,7 @@ POST /api/pessoas
   "cpf": "36979184008",
   "genero": "Masculino",
   "nascimento": "1985-06-27",
-  "usuarioID": "5cfb8984-77c3-4800-8144-b75a62353573",
+  "usuarioID": "USUARIO_ID",
   "relacionamento": [
     {
       "nome": "Jonas 2",
@@ -321,7 +322,7 @@ POST /api/pessoas
       "genero": "Masculino",
       "nascimento": "2012-01-27",
       "cpf": "15863220015",
-      "usuarioID": "9fdfcce8-85b3-4f28-990b-53581eca6a3e"
+      "usuarioID": "USUARIO_ID"
     }
   ]
 }
@@ -353,17 +354,17 @@ POST /api/pessoas
 
 | campo | descrição |
 | :--- | :--- |
-| nome | `nome do cliente` |
-| cpf | `cpf do cliente` |
-| genero | `genero do cliente` |
-| nascimento | `data de nascimento do cliente. Formato permitido: yyyy-mm-dd` |
-| usuarioID | `id do usuario no formato UUID` [mais informações]() |
+| nome | `nome do superior` |
+| cpf | `cpf do superior` |
+| genero | `genero do superior` |
+| nascimento | `data de nascimento do superior. Formato permitido: yyyy-mm-dd` |
+| usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#usuarios) |
 | relacionamento.nome | `nome do dependente` |
 | relacionamento.parentesco | `tipo de parentesco, podendo ser filho, esposa, sobrinho, marido etc...` |
 | relacionamento.genero | `genero do dependente` |
 | relacionamento.nascimento | `data de nascimento do dependente. Formato permitido: yyyy-mm-dd` |
 | relacionamento.cpf | `cpf do cliente` |
-| relacionamento.usuarioID | `id do usuario no formato UUID` [mais informações]() |
+| relacionamento.usuarioID | `id do usuario no formato UUID` [mais informações](https://github.com/JonasBarros1998/tech-challenge/tree/techchallange-fase-2#usuarios) |
 
 
 #### Pesquisar por dependentes
@@ -371,7 +372,7 @@ POST /api/pessoas
 - Ao pesquisar deve retornar um json, listando todos os seus dependentes
 
 ```http
-GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
+GET /api/pessoas/CPF_PESSOA_SUPERIOR/dependentes
 ```
 
 - resposta do endpoint
@@ -392,8 +393,8 @@ GET /api/pessoas/ID_PESSOA_SUPERIOR/dependentes
 ]
 ```
 
-#### Pesquisar por nome e por genero
-- Nessa pesquisa é possível consultar todas as pessoas por nome ou genero
+#### Pesquisar por nome e por gênero
+- Nessa pesquisa é possível consultar todas as pessoas por nome ou gênero
 - Ambos os endpoints retornam o mesmo json de acordo com a consulta
   
 ```http
@@ -419,7 +420,7 @@ GET /api/pessoas?nome=NOME_DA_PESSOA
 - Com esse endpoint é possível fazer relacionamentos familiares entre os membros da casa
 
 ```http
-GET /api/pessoas/ID_DO_SUPERIOR/parentesco?tipo=TIPO_DE_PARENTESCO
+GET /api/pessoas/CPF_DO_SUPERIOR/parentesco?tipo=TIPO_DE_PARENTESCO
 ```
 
 - Retorno do endpoint
@@ -521,7 +522,7 @@ POST /api/eletrodomesticos
 | consumoEnergetico | `consumo energético por hora` |
 | porcentagemDeEconomia | `Campo opcional. Porcentagem de economia do aparelho, por exemplo 10, 20, 30. Esse campo é utilizado para os modelos fabricados antes de 2021`
 | dataDeCadastro | `Data em que foi cadastrado o eletrodoméstico` |
-| usuarios.id | `envie os IDs usuários que utilizam esse aparelho` |
+| usuarios.id | `envie os IDs dos usuários que utilizam esse aparelho` |
 
 - retorno do endpoint
 ```json
@@ -550,7 +551,7 @@ POST /api/eletrodomesticos
 #### Adicionar novos usuário aos eletrodomesticos
 
 ```http
-GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
+POST /api/eletrodomesticos/ID_ELETRODOMESTICO/usuario
 ```
 
 - body da requisição
@@ -560,8 +561,19 @@ GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 }
 ```
 
+- resposta da requisição
+```json
+{
+  "usuario": "USUARIO_ID"
+}
+```
+
 #### Editar eletrodomesticos
 - É possível editar qualquer informação sobre o eletrodomestico
+
+```http
+PUT /api/eletrodomesticos/ID_ELETRODOMESTICO
+```
 
 - body da requisição
 ```json
@@ -582,17 +594,16 @@ GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 - retorno do endpoint
 ```json
 {
-  "nome": "Celular",
-  "modelo": "Xiaomi 123",
+  "nome": "Geladeira",
+  "modelo": "1234 abcd",
   "potencia": 900,
   "volts": 110,
-  "marca": "Xiaomi",
+  "marca": "Brastemp",
   "eficienciaEnergetica": {
-    "consumoEnergetico": 50,
     "classificacao": "A",
+    "consumoEnergetico": 50,
     "porcentagemDeEconomia": 10
-  },
-  "dataDeCadastro": "2023-09-03"
+  }
 }
 ```
 
@@ -600,7 +611,7 @@ GET /api/eletrodomesticos/usuario/ELETRODOMESTICO_ID
 - Utilizado para cumprir o item 9 da API de eletrodomestico do tech challange, onde diz o seguinte: "A API de gestão de eletrodomésticos deve ser capaz de identificar os consumos de energia dos aparelhos eletrônicos cadastrados, com base no tempo de uso reportado pelo adaptador".
 
 ```http
-PUT /api/eletrodomesticos/df3066d0-2fda-4136-aa5b-f815717e23b3/consumo
+PUT /api/eletrodomesticos/ID_ELETRODOMESTICO/consumo
 ```
 
 - body da requisição
@@ -614,12 +625,12 @@ PUT /api/eletrodomesticos/df3066d0-2fda-4136-aa5b-f815717e23b3/consumo
 ```json
 {
   "tempoDeUso": "01:30:00",
-  "consumoEnergeticoPorHora": 75.000
+  "consumoEnergeticoPorHora": 75
 }
 ```
 
 #### Pesquisar por nome, potência e modelo
-- As urls abaixo, tem intuito de pesquisar por nome, potência e modelo. O retorno da API é o mesmo para todos os endpoint, mudando apenas o tipo da pesquisa
+- As urls abaixo, tem o intuito de pesquisar por nome, potência e modelo. O retorno da API é o mesmo para todos os endpoint, mudando apenas o tipo da pesquisa
   
 ```http
 GET /api/eletrodomesticos?nome=NOME_DO_APARELHO
@@ -635,8 +646,8 @@ GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
   
 | campo | descrição |
 | :--- | :--- |
-| `de` | minimo de potencia que gostaria de filtrar | 
-| `ate` | maximo de potencia que gostaria de filtrar |
+| `de` | mínimo de potência que gostaria de filtrar | 
+| `ate` | máximo de potência que gostaria de filtrar |
 
 - body da requisição
 ```json
@@ -655,31 +666,4 @@ GET /api/eletrodomesticos?modelo=MODELO_DO_ELETRODOMESTICO
   }
 ]
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
